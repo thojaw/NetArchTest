@@ -76,5 +76,28 @@
             Assert.Contains<Type>(typeof(ClassB2), result);
         }
 
+        [Fact(DisplayName = "GetTypeNames should work whenever GetTypes could be used on a PredicateList.")]
+        public void GetTypeNames_Success_AnyConditions()
+        {
+            // Same as test "Or_AppliedToPredicates_SelectCorrectTypes" but with Type Names verification
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace1")
+                .Or()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace2")
+                .Or()
+                .ResideInNamespace("NetArchTest.TestStructure.Generic")
+                .GetTypeNames();
+
+            Assert.Equal(7, result.Count()); // seven types found
+            Assert.Contains(typeof(ClassA1).FullName, result);
+            Assert.Contains(typeof(ClassA2).FullName, result);
+            Assert.Contains(typeof(ClassA3).FullName, result);
+            Assert.Contains(typeof(ClassB1).FullName, result);
+            Assert.Contains(typeof(ClassB2).FullName, result);
+            Assert.Contains(typeof(GenericType<>).FullName, result);
+            Assert.Contains(typeof(NonGenericType).FullName, result);
+        }
     }
 }
