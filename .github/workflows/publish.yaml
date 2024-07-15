@@ -17,8 +17,4 @@ jobs:
     - name: Pack
       run: dotnet pack "${{github.workspace}}/src/NetArchTest.Rules" -c Release --verbosity normal
     - name: Publish NuGet package
-      run: |
-        foreach($file in (Get-ChildItem "${{github.workspace}}/src/NetArchTest.Rules/bin/Release" -Recurse -Include *.nupkg)) {
-            dotnet nuget push $file --api-key "${{secrets.NUGET_APIKEY}}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-        }
-
+      run: dotnet nuget push "${{github.workspace}}/src/NetArchTest.Rules/bin/Release/*.nupkg" --api-key "${{secrets.NUGET_APIKEY}}" --source https://api.nuget.org/v3/index.json --skip-duplicate
