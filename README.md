@@ -1,6 +1,9 @@
-﻿# NetArchTest
+## 🧬 TestArchNet
 
-[![Build status](https://dev.azure.com/ben-morris-uk/Open-Source/_apis/build/status/NetArchTest-CI-Build)](https://dev.azure.com/ben-morris-uk/Open-Source/_build/latest?definitionId=2)
+This is a fork of [Ben Morris` NetArchTest](https://github.com/BenMorris/NetArchTest). It has been extended with a few custom features.  
+From here, this is the original description.
+ 
+# NetArchTest
 
 A fluent API for .Net Standard that can enforce architectural rules in unit tests. 
 
