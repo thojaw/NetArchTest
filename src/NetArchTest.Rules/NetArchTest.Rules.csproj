@@ -9,7 +9,7 @@
     <Copyright>Copyright (c) 2021 Ben Morris</Copyright>
     <PackageLicense>https://github.com/BenMorris/NetArchTest/blob/master/LICENSE</PackageLicense>
     <PackageProjectUrl>https://www.ben-morris.com/writing-archunit-style-tests-for-net-and-c-for-self-testing-architectures/</PackageProjectUrl>
-    <PackageIcon>bm-nuget-icon.png</PackageIcon>
+    <PackageIcon>package.png</PackageIcon>
     <RepositoryUrl>https://github.com/BenMorris/NetArchTest</RepositoryUrl>
     <PackageTags>test architecture dependencies archtest</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="bm-nuget-icon.png" Pack="true" PackagePath="" />
+    <None Include="package.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
