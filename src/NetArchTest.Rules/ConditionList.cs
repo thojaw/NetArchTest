@@ -77,6 +77,15 @@
             => _sequence.Execute(_types).Select(t => t.ToType());
 
         /// <summary>
+        /// Returns the list of type names that satisfy the conditions.
+        /// </summary>
+        /// <remarks>
+        /// This is a "safer" way of getting a list of types that satisfy the conditions as it does not load the types when enumerating the list. This can lead to dependency loading errors.
+        /// </remarks>
+        public IEnumerable<string> GetTypeNames()
+            => _sequence.Execute(_types).Select(t => t.FullName);
+
+        /// <summary>
         /// Specifies that any subsequent condition should be treated as an "and" condition.
         /// </summary>
         /// <returns>An set of conditions that can be applied to a list of classes.</returns>
