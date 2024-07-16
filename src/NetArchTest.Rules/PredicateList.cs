@@ -61,6 +61,15 @@
                 .Select(t => t.ToType());
 
         /// <summary>
+        /// Returns the list of type names returned by these predicates.
+        /// </summary>
+        /// <remarks>
+        /// This is a "safer" way of getting a list of types returned by these predicates as it does not load the types when enumerating the list. This can lead to dependency loading errors.
+        /// </remarks>
+        public IEnumerable<string> GetTypeNames()
+            => _sequence.Execute(_types).Select(t => t.FullName);
+
+        /// <summary>
         /// Specifies that any subsequent predicates should be treated as "and" conditions.
         /// </summary>
         /// <returns>An set of predicates that can be applied to a list of classes.</returns>
