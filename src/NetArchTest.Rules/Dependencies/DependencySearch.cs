@@ -1,6 +1,7 @@
 ﻿namespace NetArchTest.Rules.Dependencies
 {
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
     using Mono.Cecil;
     using NetArchTest.Rules.Dependencies.DataStructures;
 
@@ -18,6 +19,11 @@
         public IReadOnlyList<TypeDefinition> FindTypesThatHaveDependencyOnAny(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
         {  
             return FindTypes(input, TypeDefinitionCheckingResult.SearchType.HaveDependencyOnAny, dependencies, true);           
+        }
+
+        public IReadOnlyList<TypeDefinition> FindTypesThatHaveDependencyOnAnyMatching(IEnumerable<TypeDefinition> input, Regex regex)
+        {
+            return FindTypes(input, TypeDefinitionCheckingResult.SearchType.HaveDependencyOnAny, regex, true);           
         }
 
         /// <summary>
@@ -80,6 +86,24 @@
             }
 
             return output;
-        }       
+        }  
+        
+        private List<TypeDefinition> FindTypes(IEnumerable<TypeDefinition> input, TypeDefinitionCheckingResult.SearchType searchType, Regex regex, bool searchForDependencyInFieldConstant)
+        {
+            var output = new List<TypeDefinition>();
+            var searchTree = new DynamicMatchSearchTree(regex);
+
+            foreach (var type in input)
+            {
+                var context = new TypeDefinitionCheckingContext(type, searchType, searchTree, searchForDependencyInFieldConstant);
+
+                if (context.IsTypeFound())
+                {
+                    output.Add(type);
+                }
+            }
+
+            return output;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<string> HaveNameMatching = 
             delegate (IEnumerable<TypeDefinition> input, string pattern, bool condition)
             {
-                var r = new Regex(pattern, RegexOptions.IgnoreCase);
+                var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
                 
                 return input.Where(c => r.Match(c.Name).Success == condition);
             };
@@ -261,7 +261,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<string> ResideInNamespaceMatching = 
             delegate (IEnumerable<TypeDefinition> input, string pattern, bool condition)
             {
-                var r = new Regex(pattern, RegexOptions.IgnoreCase);
+                var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
             
                 return input.Where(c => r.Match(c.GetNamespace()).Success == condition);
             };
@@ -276,6 +276,23 @@ namespace NetArchTest.Rules
             
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatHaveDependencyOnAny(typeDefinitions, dependencies);
+
+                return condition
+                    ? matchingTypes
+                    : typeDefinitions.Except(matchingTypes);
+            };
+
+        /// <summary>
+        /// Function for finding types that have a dependency on types that match the regular expression.
+        /// </summary>
+        internal static readonly FunctionDelegate<string> HaveDependencyOnAnyMatching =
+            delegate (IEnumerable<TypeDefinition> input, string pattern, bool condition)
+            {
+                var typeDefinitions = input.ToList();
+                var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            
+                var search = new DependencySearch();
+                var matchingTypes = search.FindTypesThatHaveDependencyOnAnyMatching(typeDefinitions, r);
 
                 return condition
                     ? matchingTypes
