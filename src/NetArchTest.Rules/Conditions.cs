@@ -642,6 +642,17 @@
         }
 
         /// <summary>
+        /// Selects types that have a dependency on any type matching the given regex pattern.
+        /// </summary>
+        /// <param name="pattern">The regex pattern that will be applied to the full type name.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveDependencyOnAnyMatching(string pattern)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveDependencyOnAnyMatching, pattern, true);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
         /// Selects types that have a dependency on all of the particular types.
         /// </summary>
         /// <param name="dependencies">The dependencies to match against. These can be namespaces or specific types.</param>
@@ -682,6 +693,17 @@
         public ConditionList NotHaveDependencyOnAny(params string[] dependencies)
         {
             _sequence.AddFunctionCall(FunctionDelegates.HaveDependencyOnAny, dependencies, false);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types that do not have a dependency on any type matching the given regex pattern.
+        /// </summary>
+        /// <param name="pattern">The regex pattern that will be applied to the full type name.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveDependencyOnAnyMatching(string pattern)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveDependencyOnAnyMatching, pattern, false);
             return new ConditionList(_types, _should, _sequence);
         }
 

@@ -848,6 +848,36 @@ namespace NetArchTest.Rules.UnitTests
             Assert.True(result.IsSuccessful);
         }
 
+        [Fact(DisplayName = "Types can be selected if they have a dependency on a regex pattern.")]
+        public void HaveDependencyOnAnyMatching_MatchesFound_RegexGiven()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace(typeof(HasDependency).Namespace)
+                .And()
+                .HaveNameStartingWith("Has")
+                .Should()
+                .HaveDependencyOnAnyMatching(@"\b(Another)?ExampleDependency\b")
+                .GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected if they do not have a dependency on a regex pattern.")]
+        public void NotHaveDependencyOnAnyMatching_MatchesFound_RegexGiven()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace(typeof(HasDependency).Namespace)
+                .Should()
+                .NotHaveDependencyOnAnyMatching(@"Some.*Regex?[0-9]*")
+                .GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
         [Fact(DisplayName = "Types can be selected if they have a dependency on all the items in a list.")]
         public void HaveDependencyOnAll_MatchesFound_ClassSelected()
         {
