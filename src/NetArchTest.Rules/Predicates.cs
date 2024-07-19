@@ -8,12 +8,12 @@
     /// <summary>
     /// A set of predicates that can be applied to a list of types.
     /// </summary>
-    public sealed class Predicates
+    public sealed class Predicates : IDisposable
     {
         /// <summary>
-        /// A list of types that conditions can be applied to.
+        /// The parant to dispose.
         /// </summary>
-        private readonly IEnumerable<TypeDefinition> _types;
+        private readonly Types _types;
 
         ///<summary>
         /// The sequence of conditions that is applied to the type of list.
@@ -23,18 +23,18 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Predicates"/> class.
         /// </summary>
-        internal Predicates(IEnumerable<TypeDefinition> types)
+        internal Predicates(Types types)
         {
-            _types = types.ToList();
+            _types = types;
             _sequence = new FunctionSequence();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Predicates"/> class.
         /// </summary>
-        internal Predicates(IEnumerable<TypeDefinition> types, FunctionSequence calls)
+        internal Predicates(Types types, FunctionSequence calls)
         {
-            _types = types.ToList();
+            _types = types;
             _sequence = calls;
         }
 
@@ -734,5 +734,8 @@
             _sequence.AddFunctionCall(FunctionDelegates.MeetCustomRule, rule, true);
             return new PredicateList(_types, _sequence);
         }
+
+        /// <inheritdoc />
+        public void Dispose() => _types.Dispose();
     }
 }

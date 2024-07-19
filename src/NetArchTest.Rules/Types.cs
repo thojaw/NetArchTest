@@ -13,12 +13,21 @@
     /// <summary>
     /// Creates a list of types that can have predicates and conditions applied to it.
     /// </summary>
-    public sealed class Types
+    public sealed class Types : IDisposable
     {
+        private bool _alreadyDisposed;
+
+        /// <summary>
+        /// Keep references here for lookup or later disposal
+        /// </summary>
+        private readonly Dictionary<string, AssemblyDefinition> _assemblyDefinitions = new Dictionary<string, AssemblyDefinition>();
+
         /// <summary>
         /// The list of types represented by this instance.
         /// </summary>
-        private readonly List<TypeDefinition> _types;
+        private readonly List<TypeDefinition> _types = new List<TypeDefinition>();
+
+        private FunctionSequence _predicate = null;
 
         /// <summary>
         /// The list of namespaces to exclude from the current domain.
@@ -31,10 +40,19 @@
         /// <summary>
         /// Prevents any external class initializing a new instance of the <see cref="Types"/> class.
         /// </summary>
-        /// <param name="types">The list of types for the instance.</param>
-        private Types(IEnumerable<TypeDefinition> types)
+        private Types()
         {
-            _types = types.ToList();
+        }
+
+        /// <summary>
+        /// Applies the functionSequence as filter for Types.
+        /// </summary>
+        /// <param name="functionSequence">functionSequence to apply to types when selecting.</param>
+        /// <returns>Self.</returns>
+        internal Types UsingPredicate(FunctionSequence functionSequence)
+        {
+            _predicate = functionSequence;
+            return this;
         }
 
         /// <summary>
@@ -73,7 +91,11 @@
         /// <returns>A list of types that can have predicates and conditions applied to it.</returns>
         public static Types InAssemblies(IEnumerable<Assembly> assemblies, IEnumerable<string> searchDirectories = null)
         {
-            var types = new List<TypeDefinition>();
+            return new Types().LoadAssemblies(assemblies, searchDirectories);
+        }
+
+        private Types LoadAssemblies(IEnumerable<Assembly> assemblies, IEnumerable<string> searchDirectories = null)
+        {
             var directories = searchDirectories?.ToList()
                 ?? new List<string>();
 
@@ -106,11 +128,11 @@
                 // Read all the types in the assembly 
                 if (assemblyDef != null)
                 {
-                    types.AddRange(GetAllTypes(assemblyDef.Modules.SelectMany(t => t.Types)));
+                    _types.AddRange(GetAllTypes(assemblyDef.Modules.SelectMany(t => t.Types)));
                 }
             }
 
-            return new Types(types);
+            return this;
         }
 
         /// <summary>
@@ -119,6 +141,11 @@
         /// <param name="name">The namespace to list types for. This is case insensitive.</param>
         /// <returns>A list of types that can have predicates and conditions applied to it.</returns>
         public static Types InNamespace(string name)
+        {
+            return new Types().LoadNamespace(name);
+        }
+
+        private Types LoadNamespace(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -157,7 +184,9 @@
             }
 
             var list = GetAllTypes(types);
-            return new Types(list);
+            _types.AddRange(list);
+
+            return this;
         }
 
         /// <summary>
@@ -167,6 +196,11 @@
         /// <returns>A list of types that can have predicates and conditions applied to it.</returns>
         /// <remarks>Assumes that the module is in the same directory as the executing assembly, unless absolute path is provided.</remarks>
         public static Types FromFile(string filename)
+        {
+            return new Types().LoadFile(filename);
+        }
+        
+        private Types LoadFile(string filename)
         {
             if (string.IsNullOrEmpty(filename))
             {
@@ -188,9 +222,12 @@
 
             var assemblyDef = ReadAssemblyDefinition(path);
 
-            return assemblyDef != null
-                ? new Types(GetAllTypes(assemblyDef.Modules.SelectMany(t => t.Types)))
-                : new Types(new List<TypeDefinition>());
+            if (assemblyDef != null)
+            {
+                _types.AddRange(GetAllTypes(assemblyDef.Modules.SelectMany(t => t.Types)));
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -200,6 +237,11 @@
         /// <returns>A list of types that can have predicates and conditions applied to it.</returns>
         /// <remarks>Assumes that the modules are in the same directory as the executing assembly, unless absolute paths are provided.</remarks>
         public static Types FromFiles(IEnumerable<string> filenames)
+        {
+            return new Types().LoadFiles(filenames);
+        }
+
+        private Types LoadFiles(IEnumerable<string> filenames)
         {
             var types = new List<TypeDefinition>();
 
@@ -227,7 +269,9 @@
             }
 
             var list = GetAllTypes(types);
-            return new Types(list);
+            _types.AddRange(list);
+
+            return this;
         }
 
         /// <summary>
@@ -237,6 +281,11 @@
         /// <param name="searchDirectories">An optional list of search directories to allow resolution of referenced assemblies.</param>
         /// <returns>A list of types that can have predicates and conditions applied to it.</returns>
         public static Types FromPath(string path, IEnumerable<string> searchDirectories = null)
+        {
+            return new Types().LoadPath(path, searchDirectories);
+        }
+
+        private Types LoadPath(string path, IEnumerable<string> searchDirectories = null)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -277,9 +326,10 @@
             }
 
             var list = GetAllTypes(types);
-            return new Types(list);
-        }
+            _types.AddRange(list);
 
+            return this;
+        }
 
         /// <summary>
         /// Recursively fetch all the nested types in a collection of types.
@@ -308,7 +358,7 @@
         /// </summary>
         /// <returns>The list of <see cref="TypeDefinition"/> objects in this list.</returns>
         internal IEnumerable<TypeDefinition> GetTypeDefinitions()
-            => _types;
+            => _predicate != null ? _predicate.Execute(_types) : _types;
 
         /// <summary>
         /// Returns the list of <see cref="Type"/> objects describing the types in this list.
@@ -322,21 +372,21 @@
         /// </summary>
         /// <returns>A list of types onto which you can apply a series of filters.</returns>
         public Predicates That()
-            => new Predicates(_types);
+            => new Predicates(this);
 
         /// <summary>
         /// Applies a set of conditions to the list of types.
         /// </summary>
         /// <returns></returns>
         public Conditions Should()
-            => new Conditions(_types, true);
+            => new Conditions(this, true);
 
         /// <summary>
         /// Applies a negative set of conditions to the list of types.
         /// </summary>
         /// <returns></returns>
         public Conditions ShouldNot()
-            => new Conditions(_types, false);
+            => new Conditions(this, false);
 
         /// <summary>
         /// Reads the assembly, ignoring a BadImageFormatException
@@ -344,18 +394,43 @@
         /// <param name="path">The path to the exception</param>
         /// <param name="parameters">A set of optional parameters - normally used to specify custom assembly resolvers. </param>
         /// <returns>The assembly definition for the path (if it exists).</returns>
-        private static AssemblyDefinition ReadAssemblyDefinition(string path, ReaderParameters parameters = null)
+        private AssemblyDefinition ReadAssemblyDefinition(string path, ReaderParameters parameters = null)
         {
             try
             {
-                return parameters == null
+                if (_assemblyDefinitions.TryGetValue(path, out var existing))
+                {
+                    return existing;
+                }
+
+                var result = parameters == null
                     ? AssemblyDefinition.ReadAssembly(path)
                     : AssemblyDefinition.ReadAssembly(path, parameters);
+
+                _assemblyDefinitions[path] = result;
+
+                return result;
             }
             catch (BadImageFormatException)
             {
                 return null;
             }
+        }
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            if (_alreadyDisposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+
+            foreach (var type in _assemblyDefinitions.Values)
+            {
+                type.Dispose();
+            }
+
+            _alreadyDisposed = true;
         }
     }
 }

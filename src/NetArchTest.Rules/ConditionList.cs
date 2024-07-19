@@ -10,12 +10,17 @@
     /// A set of conditions and types that have have conjunctions (i.e. "and", "or")
     /// and executors (i.e. Types(), GetResult()) applied to them.
     /// </summary>
-    public sealed class ConditionList
+    public sealed class ConditionList : IDisposable
     {
+        /// <summary>
+        /// The parant to dispose.
+        /// </summary>
+        private readonly Types _types;
+
         /// <summary>
         /// A list of types that conditions can be applied to.
         /// </summary>
-        private readonly IEnumerable<TypeDefinition> _types;
+        private readonly IEnumerable<TypeDefinition> _typeDefinitions;
 
         /// <summary>
         /// The sequence of conditions that is applied to the type of list.
@@ -30,9 +35,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="ConditionList"/> class.
         /// </summary>
-        internal ConditionList(IEnumerable<TypeDefinition> classes, bool should, FunctionSequence sequence)
+        internal ConditionList(Types types, bool should, FunctionSequence sequence)
         {
-            _types = classes.ToList();
+            _types = types;
+            _typeDefinitions = types.GetTypeDefinitions();
             _should = should;
             _sequence = sequence;
         }
@@ -41,25 +47,35 @@
         /// Returns an indication of whether all the selected types satisfy the conditions.
         /// </summary>
         /// <returns>An indication of whether the conditions are true, along with a list of types failing the check if they are not.</returns>
-        public TestResult GetResult()
+        public TestResult GetResult(bool disposeReferences = true)
         {
             var typeDefinitions = _sequence
-                .Execute(_types)
+                .Execute(_typeDefinitions)
                 .ToList();
 
             var success = _should
-                ? typeDefinitions.Count == _types.Count()
+                ? typeDefinitions.Count == _typeDefinitions.Count()
                 : !typeDefinitions.Any();
 
-            if (success)
+            try
             {
-                return TestResult.Success();
-            }
+                if (success)
+                {
+                    return TestResult.Success();
+                }
 
-            return TestResult.Failure(
-                _should 
-                    ? _types.Except(typeDefinitions).ToList()
-                    : typeDefinitions.Distinct().ToList());
+                return TestResult.Failure(
+                    _should
+                        ? _typeDefinitions.Except(typeDefinitions).ToList()
+                        : typeDefinitions.Distinct().ToList());
+            }
+            finally
+            {
+                if (disposeReferences)
+                {
+                    _types.Dispose();
+                }
+            }
         }
 
         /// <summary>
@@ -67,14 +83,14 @@
         /// </summary>
         /// <returns>A list of types.</returns>
         public int Count()
-            => _sequence.Execute(_types).Count();
+            => _sequence.Execute(_typeDefinitions).Count();
 
         /// <summary>
         /// Returns the list of types that satisfy the conditions.
         /// </summary>
         /// <returns>A list of types.</returns>
         public IEnumerable<Type> GetTypes()
-            => _sequence.Execute(_types).Select(t => t.ToType());
+            => _sequence.Execute(_typeDefinitions).Select(t => t.ToType());
 
         /// <summary>
         /// Returns the list of type names that satisfy the conditions.
@@ -83,7 +99,7 @@
         /// This is a "safer" way of getting a list of types that satisfy the conditions as it does not load the types when enumerating the list. This can lead to dependency loading errors.
         /// </remarks>
         public IEnumerable<string> GetTypeNames()
-            => _sequence.Execute(_types).Select(t => t.FullName);
+            => _sequence.Execute(_typeDefinitions).Select(t => t.FullName);
 
         /// <summary>
         /// Specifies that any subsequent condition should be treated as an "and" condition.
@@ -103,5 +119,8 @@
             _sequence.CreateGroup();
             return new Conditions(_types, _should, _sequence);
         }
+
+        /// <inheritdoc />
+        public void Dispose() => _types.Dispose();
     }
 }
