@@ -90,8 +90,8 @@
                 .And()
                 .HaveNameStartingWith("Implements");
 
-            var result1 = predicates.Should().ImplementInterface(typeof(IExample)).GetResult();
-            var result1Not = predicates.ShouldNot().NotImplementInterface(typeof(IExample)).GetResult();
+            var result1 = predicates.Should().ImplementInterface(typeof(IExample)).GetResult(false);
+            var result1Not = predicates.ShouldNot().NotImplementInterface(typeof(IExample)).GetResult(false);
 
             // Third example - two conditions with an or() statement
             predicates = Types
@@ -99,7 +99,7 @@
                 .That()
                 .ResideInNamespace(" NetArchTest.TestStructure.NameMatching.Namespace1");
 
-            var result2 = predicates.Should().HaveNameStartingWith("ClassA").Or().HaveNameStartingWith("ClassB").GetResult();
+            var result2 = predicates.Should().HaveNameStartingWith("ClassA").Or().HaveNameStartingWith("ClassB").GetResult(false);
             var result2Not = predicates.ShouldNot().NotHaveNameStartingWith("ClassA").Or().NotHaveNameStartingWith("ClassB").GetResult();
 
             Assert.Equal(result1.IsSuccessful, result1Not.IsSuccessful);
