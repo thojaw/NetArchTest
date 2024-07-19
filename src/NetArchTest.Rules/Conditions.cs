@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using Mono.Cecil;
 
     /// <summary>
     /// A set of conditions that can be applied to a list of types.
@@ -11,9 +9,9 @@
     public sealed class Conditions
     {
         /// <summary>
-        /// A list of types that conditions can be applied to.
+        /// The parant to dispose.
         /// </summary>
-        private readonly IEnumerable<TypeDefinition> _types;
+        private readonly Types _types;
 
         /// <summary>
         /// The sequence of conditions that is applied to the type of list.
@@ -28,9 +26,9 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Conditions"/> class.
         /// </summary>
-        internal Conditions(IEnumerable<TypeDefinition> types, bool should)
+        internal Conditions(Types types, bool should)
         {
-            _types = types.ToList();
+            _types = types;
             _should = should;
             _sequence = new FunctionSequence();
         }
@@ -38,9 +36,9 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Conditions"/> class.
         /// </summary>
-        internal Conditions(IEnumerable<TypeDefinition> types, bool should, FunctionSequence calls)
+        internal Conditions(Types types, bool should, FunctionSequence calls)
         {
-            _types = types.ToList();
+            _types = types;
             _should = should;
             _sequence = calls;
         }
