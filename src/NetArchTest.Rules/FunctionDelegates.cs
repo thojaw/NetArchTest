@@ -2,13 +2,13 @@
 
 namespace NetArchTest.Rules
 {
+    using Mono.Cecil;
+    using NetArchTest.Rules.Dependencies;
+    using NetArchTest.Rules.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using NetArchTest.Rules.Dependencies;
-    using NetArchTest.Rules.Extensions;
-    using Mono.Cecil;
 
     /// <summary>
     /// Defines the various functions that can be applied to a collection of types.
@@ -274,7 +274,7 @@ namespace NetArchTest.Rules
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatHaveDependencyOnAny(typeDefinitions, dependencies);
 
-                return condition ? new ExtendedTypeDefinitionResult(matchingTypes) : new TypeDefinitionResult(typeDefinitions.Except(matchingTypes.Keys));
+                return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace NetArchTest.Rules
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatHaveDependencyOnAnyMatching(typeDefinitions, r);
 
-                return condition ? new ExtendedTypeDefinitionResult(matchingTypes) : new TypeDefinitionResult(typeDefinitions.Except(matchingTypes.Keys));
+                return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace NetArchTest.Rules
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatHaveDependencyOnAll(typeDefinitions, dependencies);
 
-                return condition ? new ExtendedTypeDefinitionResult(matchingTypes) : new TypeDefinitionResult(typeDefinitions.Except(matchingTypes.Keys));
+                return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace NetArchTest.Rules
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatOnlyHaveDependenciesOnAnyOrNone(typeDefinitions, dependencies);
 
-                return condition ? new ExtendedTypeDefinitionResult(matchingTypes) : new TypeDefinitionResult(typeDefinitions.Except(matchingTypes.Keys));
+                return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
 
         /// <summary>

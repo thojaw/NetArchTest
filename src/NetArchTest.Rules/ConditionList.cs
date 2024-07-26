@@ -1,10 +1,10 @@
 ﻿namespace NetArchTest.Rules
 {
+    using Mono.Cecil;
+    using NetArchTest.Rules.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using NetArchTest.Rules.Extensions;
-    using Mono.Cecil;
 
     /// <summary>
     /// A set of conditions and types that have have conjunctions (i.e. "and", "or")
@@ -49,13 +49,12 @@
         /// <returns>An indication of whether the conditions are true, along with a list of types failing the check if they are not.</returns>
         public TestResult GetResult(bool disposeReferences = true)
         {
-            var typeDefinitions = _sequence
-                .Execute(_typeDefinitions)
-                .ToList();
+            var resultingDefinitions = _sequence
+                .Execute(_typeDefinitions);
 
             var success = _should
-                ? typeDefinitions.Count == _typeDefinitions.Count()
-                : !typeDefinitions.Any();
+                ? resultingDefinitions.Count() == _typeDefinitions.Count()
+                : !resultingDefinitions.Any();
 
             try
             {
@@ -64,10 +63,17 @@
                     return TestResult.Success();
                 }
 
+                var resultList = _should
+                        ? _typeDefinitions.Except(resultingDefinitions).ToList()
+                        : resultingDefinitions.Distinct().ToList();
+
+                // Filter to only relevant dependency information
+                var dependenciesList = resultingDefinitions.DependencyInfo?
+                    .Where(x => resultList.Contains(x.Key)).ToDictionary(x => x.Key, x => x.Value);
+
                 return TestResult.Failure(
-                    _should
-                        ? _typeDefinitions.Except(typeDefinitions).ToList()
-                        : typeDefinitions.Distinct().ToList());
+                    resultList,
+                    dependenciesList);
             }
             finally
             {

@@ -1,10 +1,9 @@
 ﻿namespace NetArchTest.Rules.Dependencies
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text.RegularExpressions;
     using Mono.Cecil;
     using NetArchTest.Rules.Dependencies.DataStructures;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Finds dependencies within a given set of types.
