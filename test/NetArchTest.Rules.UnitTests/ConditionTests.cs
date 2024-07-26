@@ -934,12 +934,14 @@ namespace NetArchTest.Rules.UnitTests
                 .That()
                 .ResideInNamespace(typeof(HasDependency).Namespace)
                 .And()
-                .HaveNameStartingWith("NoDependency")
+                .HaveNameStartingWith("Has")
                 .Should()
-                .NotHaveDependencyOnAny(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .NotHaveDependencyOnAny(new[] { /*typeof(ExampleDependency).FullName, */typeof(AnotherExampleDependency).FullName })
                 .GetResult();
 
-            Assert.True(result.IsSuccessful);
+            Assert.False(result.IsSuccessful);
+
+            Console.WriteLine(string.Join(Environment.NewLine, result.FailingTypeNames));
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have a dependency on all the items in a list.")]

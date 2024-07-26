@@ -5,12 +5,14 @@ namespace NetArchTest.Rules.Dependencies
     using Mono.Cecil;
     using NetArchTest.Rules.Dependencies.DataStructures;
     using NetArchTest.Rules.Extensions;
+    using System.Collections.Generic;
 
     internal class TypeDefinitionCheckingContext
     {
         private readonly TypeDefinition _typeToCheck;
         private readonly TypeDefinitionCheckingResult _result;        
         private readonly bool _searchForDependencyInFieldConstant;
+        private bool _resultChecked;
 
         public TypeDefinitionCheckingContext(TypeDefinition typeToCheck, TypeDefinitionCheckingResult.SearchType searchType, ISearchTree searchTree, bool searchForDependencyInFieldConstant = false)
         {
@@ -21,8 +23,24 @@ namespace NetArchTest.Rules.Dependencies
 
         public bool IsTypeFound()
         {
-            CheckType(_typeToCheck);
+            CheckType();
             return _result.IsTypeFound();
+        }
+
+        public IEnumerable<string> GetFoundDependencies()
+        {
+            CheckType();
+            return _result.GetFoundDependencies();
+        }
+
+        private void CheckType()
+        {
+            if (!_resultChecked)
+            {
+                CheckType(_typeToCheck);
+            }
+
+            _resultChecked = true;
         }
 
         /// <summary>

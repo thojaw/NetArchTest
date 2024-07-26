@@ -36,6 +36,7 @@
             _hasDependencyFromOutsideOfSearchTree = false;
         }
 
+        public IEnumerable<string> GetFoundDependencies() => _foundDependencies;
 
         public bool IsTypeFound()
         {            
