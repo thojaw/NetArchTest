@@ -1,9 +1,9 @@
 ﻿namespace NetArchTest.Rules.Dependencies
 {
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
     using Mono.Cecil;
     using NetArchTest.Rules.Dependencies.DataStructures;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Finds dependencies within a given set of types.
@@ -16,12 +16,12 @@
         /// <param name="input">The set of type definitions to search.</param>
         /// <param name="dependencies">The set of dependencies to look for.</param>
         /// <returns>A list of found types.</returns>
-        public IReadOnlyList<TypeDefinition> FindTypesThatHaveDependencyOnAny(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
+        public IReadOnlyDictionary<TypeDefinition, IEnumerable<string>> FindTypesThatHaveDependencyOnAny(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
         {  
             return FindTypes(input, TypeDefinitionCheckingResult.SearchType.HaveDependencyOnAny, dependencies, true);           
         }
 
-        public IReadOnlyList<TypeDefinition> FindTypesThatHaveDependencyOnAnyMatching(IEnumerable<TypeDefinition> input, Regex regex)
+        public IReadOnlyDictionary<TypeDefinition, IEnumerable<string>> FindTypesThatHaveDependencyOnAnyMatching(IEnumerable<TypeDefinition> input, Regex regex)
         {
             return FindTypes(input, TypeDefinitionCheckingResult.SearchType.HaveDependencyOnAny, regex, true);           
         }
@@ -32,7 +32,7 @@
         /// <param name="input">The set of type definitions to search.</param>
         /// <param name="dependencies">The set of dependencies to look for.</param>
         /// <returns>A list of found types.</returns>
-        public IReadOnlyList<TypeDefinition> FindTypesThatHaveDependencyOnAll(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
+        public IReadOnlyDictionary<TypeDefinition, IEnumerable<string>> FindTypesThatHaveDependencyOnAll(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
         {  
             return FindTypes(input, TypeDefinitionCheckingResult.SearchType.HaveDependencyOnAll, dependencies, true);         
         }
@@ -43,7 +43,7 @@
         /// <param name="input">The set of type definitions to search.</param>
         /// <param name="dependencies">The set of dependencies to look for.</param>
         /// <returns>A list of found types.</returns>
-        public IReadOnlyList<TypeDefinition> FindTypesThatOnlyHaveDependenciesOnAnyOrNone(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
+        public IReadOnlyDictionary<TypeDefinition, IEnumerable<string>> FindTypesThatOnlyHaveDependenciesOnAnyOrNone(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
         {           
             return FindTypes(input, TypeDefinitionCheckingResult.SearchType.OnlyHaveDependenciesOnAnyOrNone, dependencies, false);
         }
@@ -54,7 +54,7 @@
         /// <param name="input">The set of type definitions to search.</param>
         /// <param name="dependencies">The set of dependencies to look for.</param>
         /// <returns>A list of found types.</returns>
-        public IReadOnlyList<TypeDefinition> FindTypesThatOnlyHaveDependenciesOnAny(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
+        public IReadOnlyDictionary<TypeDefinition, IEnumerable<string>> FindTypesThatOnlyHaveDependenciesOnAny(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
         {
             return FindTypes(input, TypeDefinitionCheckingResult.SearchType.OnlyHaveDependenciesOnAny, dependencies, false);
         }
@@ -65,14 +65,14 @@
         /// <param name="input">The set of type definitions to search.</param>
         /// <param name="dependencies">The set of dependencies to look for.</param>
         /// <returns>A list of found types.</returns>
-        public IReadOnlyList<TypeDefinition> FindTypesThatOnlyOnlyHaveDependenciesOnAll(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
+        public IReadOnlyDictionary<TypeDefinition, IEnumerable<string>> FindTypesThatOnlyOnlyHaveDependenciesOnAll(IEnumerable<TypeDefinition> input, IEnumerable<string> dependencies)
         {
             return FindTypes(input, TypeDefinitionCheckingResult.SearchType.OnlyHaveDependenciesOnAll, dependencies, false);
         }
 
-        private List<TypeDefinition> FindTypes(IEnumerable<TypeDefinition> input, TypeDefinitionCheckingResult.SearchType searchType, IEnumerable<string> dependencies, bool searchForDependencyInFieldConstant)
+        private IReadOnlyDictionary<TypeDefinition, IEnumerable<string>> FindTypes(IEnumerable<TypeDefinition> input, TypeDefinitionCheckingResult.SearchType searchType, IEnumerable<string> dependencies, bool searchForDependencyInFieldConstant)
         {
-            var output = new List<TypeDefinition>();
+            var output = new Dictionary<TypeDefinition, IEnumerable<string>>();
             var searchTree = new CachedNamespaceTree(dependencies);
 
             foreach (var type in input)
@@ -81,16 +81,16 @@
 
                 if (context.IsTypeFound())
                 {
-                    output.Add(type);
+                    output.Add(type, context.GetFoundDependencies());
                 }
             }
 
             return output;
         }  
         
-        private List<TypeDefinition> FindTypes(IEnumerable<TypeDefinition> input, TypeDefinitionCheckingResult.SearchType searchType, Regex regex, bool searchForDependencyInFieldConstant)
+        private IReadOnlyDictionary<TypeDefinition, IEnumerable<string>> FindTypes(IEnumerable<TypeDefinition> input, TypeDefinitionCheckingResult.SearchType searchType, Regex regex, bool searchForDependencyInFieldConstant)
         {
-            var output = new List<TypeDefinition>();
+            var output = new Dictionary<TypeDefinition, IEnumerable<string>>();
             var searchTree = new DynamicMatchSearchTree(regex);
 
             foreach (var type in input)
@@ -99,7 +99,7 @@
 
                 if (context.IsTypeFound())
                 {
-                    output.Add(type);
+                    output.Add(type, context.GetFoundDependencies());
                 }
             }
 

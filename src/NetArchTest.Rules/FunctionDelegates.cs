@@ -2,13 +2,13 @@
 
 namespace NetArchTest.Rules
 {
+    using Mono.Cecil;
+    using NetArchTest.Rules.Dependencies;
+    using NetArchTest.Rules.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using NetArchTest.Rules.Dependencies;
-    using NetArchTest.Rules.Extensions;
-    using Mono.Cecil;
 
     /// <summary>
     /// Defines the various functions that can be applied to a collection of types.
@@ -21,7 +21,7 @@ namespace NetArchTest.Rules
         /// <summary>
         /// The base delegate type used by every function.
         /// </summary>
-        internal delegate IEnumerable<TypeDefinition> FunctionDelegate<T>(IEnumerable<TypeDefinition> input, T arg, bool condition);
+        internal delegate TypeDefinitionResult FunctionDelegate<T>(IEnumerable<TypeDefinition> input, T arg, bool condition);
 
         /// <summary>
         /// Function for finding a specific type name.
@@ -29,8 +29,8 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<string> HaveName = 
             delegate (IEnumerable<TypeDefinition> input, string name, bool condition)
             {
-                return input.Where(c => 
-                    c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) == condition);
+                return new TypeDefinitionResult(input.Where(c => 
+                    c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) == condition));
             };
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace NetArchTest.Rules
             {
                 var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
                 
-                return input.Where(c => r.Match(c.Name).Success == condition);
+                return new TypeDefinitionResult(input.Where(c => r.Match(c.Name).Success == condition));
             };
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace NetArchTest.Rules
         internal static FunctionDelegate<string> MakeFunctionDelegateUsingStringComparerForHaveNameStartingWith(StringComparison comparer) 
             => delegate (IEnumerable<TypeDefinition> input, string start, bool condition) 
             {
-                return input.Where(c => c.Name.StartsWith(start, comparer) == condition);
+                return new TypeDefinitionResult(input.Where(c => c.Name.StartsWith(start, comparer) == condition));
             };
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace NetArchTest.Rules
         internal static FunctionDelegate<string> MakeFunctionDelegateUsingStringComparerForHaveNameEndingWith(StringComparison comparer) 
             => delegate (IEnumerable<TypeDefinition> input, string end, bool condition)
             {
-                return input.Where(c => c.Name.EndsWith(end, comparer) == condition);
+                return new TypeDefinitionResult(input.Where(c => c.Name.EndsWith(end, comparer) == condition));
             };
 
         /// <summary>
@@ -74,10 +74,10 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<Type> HaveCustomAttribute = 
             delegate (IEnumerable<TypeDefinition> input, Type attribute, bool condition)
             {
-                return input.Where(c => 
+                return new TypeDefinitionResult(input.Where(c => 
                     c.CustomAttributes.Any(a => 
                         attribute.FullName?.Equals(a.AttributeType.FullName, StringComparison.InvariantCultureIgnoreCase) ?? false)
-                    == condition);
+                    == condition));
             };
 
         /// <summary>
@@ -88,11 +88,11 @@ namespace NetArchTest.Rules
             {
                 var target = attribute.ToTypeDefinition();
                 
-                return input.Where(c => 
+                return new TypeDefinitionResult(input.Where(c => 
                     c.CustomAttributes.Any(a => 
                         a.AttributeType.Resolve().IsSubclassOf(target) 
                         || (attribute.FullName?.Equals(a.AttributeType.FullName, StringComparison.InvariantCultureIgnoreCase) ?? false)
-                    ) == condition);
+                    ) == condition));
             };
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace NetArchTest.Rules
             {
                 var target = type.ToTypeDefinition();
 
-                return input.Where(c => c.IsSubclassOf(target) == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsSubclassOf(target) == condition));
             };
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace NetArchTest.Rules
                     .Where(t => t.Interfaces.Any(i =>
                         i.InterfaceType.Resolve().FullName.Equals(target, StringComparison.InvariantCultureIgnoreCase)));
 
-                return condition
+                return new TypeDefinitionResult(condition
                     ? matchingTypes
-                    : typeDefinitions.Except(matchingTypes);
+                    : typeDefinitions.Except(matchingTypes));
             };
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeAbstract = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.IsAbstract == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsAbstract == condition));
             };
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeClass = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.IsClass == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsClass == condition));
             };
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeInterface = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.IsInterface == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsInterface == condition));
             };
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeStatic = 
             delegate(IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => ClassIsStatic(c) == condition);
+                return new TypeDefinitionResult(input.Where(c => ClassIsStatic(c) == condition));
 
                 bool ClassIsStatic(TypeDefinition c) => 
                     c.IsAbstract 
@@ -177,7 +177,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeGeneric = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.HasGenericParameters == condition);
+                return new TypeDefinitionResult(input.Where(c => c.HasGenericParameters == condition));
             };
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeNested = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.IsNested == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsNested == condition));
             };
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeNestedPublic = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.IsNestedPublic == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsNestedPublic == condition));
             };
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeNestedPrivate = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.IsNestedPrivate == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsNestedPrivate == condition));
             };
 
         /// <summary>
@@ -213,9 +213,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BePublic = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return condition 
-                    ? input.Where(c => c.IsNested ? c.IsNestedPublic : c.IsPublic)
-                    : input.Where(c => c.IsNested ? !c.IsNestedPublic : c.IsNotPublic);
+                return new TypeDefinitionResult(condition ? input.Where(c => c.IsNested ? c.IsNestedPublic : c.IsPublic) : input.Where(c => c.IsNested ? !c.IsNestedPublic : c.IsNotPublic));
             };
 
         /// <summary>
@@ -224,7 +222,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeSealed = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.IsSealed == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsSealed == condition));
             };
 
         /// <summary>
@@ -233,7 +231,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> BeImmutable = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.IsImmutable() == condition);
+                return new TypeDefinitionResult(input.Where(c => c.IsImmutable() == condition));
             };
 
         /// <summary>
@@ -242,7 +240,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<bool> HasNullableMembers = 
             delegate (IEnumerable<TypeDefinition> input, bool dummy, bool condition)
             {
-                return input.Where(c => c.HasNullableMembers() == condition);
+                return new TypeDefinitionResult(input.Where(c => c.HasNullableMembers() == condition));
             };
 
         /// <summary>
@@ -251,8 +249,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<string> ResideInNamespace = 
             delegate (IEnumerable<TypeDefinition> input, string name, bool condition)
             {
-                return input.Where(c => 
-                    c.FullName.StartsWith(name, StringComparison.InvariantCultureIgnoreCase) == condition);
+                return new TypeDefinitionResult(input.Where(c => c.FullName.StartsWith(name, StringComparison.InvariantCultureIgnoreCase) == condition));
             };
 
         /// <summary>
@@ -263,7 +260,7 @@ namespace NetArchTest.Rules
             {
                 var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
             
-                return input.Where(c => r.Match(c.GetNamespace()).Success == condition);
+                return new TypeDefinitionResult(input.Where(c => r.Match(c.GetNamespace()).Success == condition));
             };
 
         /// <summary>
@@ -277,9 +274,7 @@ namespace NetArchTest.Rules
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatHaveDependencyOnAny(typeDefinitions, dependencies);
 
-                return condition
-                    ? matchingTypes
-                    : typeDefinitions.Except(matchingTypes);
+                return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
 
         /// <summary>
@@ -294,9 +289,7 @@ namespace NetArchTest.Rules
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatHaveDependencyOnAnyMatching(typeDefinitions, r);
 
-                return condition
-                    ? matchingTypes
-                    : typeDefinitions.Except(matchingTypes);
+                return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
 
         /// <summary>
@@ -310,9 +303,7 @@ namespace NetArchTest.Rules
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatHaveDependencyOnAll(typeDefinitions, dependencies);
 
-                return condition
-                    ? matchingTypes
-                    : typeDefinitions.Except(matchingTypes);
+                return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
 
         /// <summary>
@@ -326,9 +317,7 @@ namespace NetArchTest.Rules
                 var search = new DependencySearch();
                 var matchingTypes = search.FindTypesThatOnlyHaveDependenciesOnAnyOrNone(typeDefinitions, dependencies);
 
-                return condition
-                    ? matchingTypes
-                    : typeDefinitions.Except(matchingTypes);
+                return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
 
         /// <summary>
@@ -337,7 +326,7 @@ namespace NetArchTest.Rules
         internal static readonly FunctionDelegate<ICustomRule> MeetCustomRule = 
             delegate (IEnumerable<TypeDefinition> input, ICustomRule rule, bool condition)
             {
-                return input.Where(t => rule.MeetsRule(t) == condition);
+                return new TypeDefinitionResult(input.Where(t => rule.MeetsRule(t) == condition));
             };
     }
 }

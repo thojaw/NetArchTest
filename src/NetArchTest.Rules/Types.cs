@@ -1,14 +1,14 @@
 ﻿namespace NetArchTest.Rules
 {
+    using Mono.Cecil;
+    using NetArchTest.Rules.Dependencies.DataStructures;
+    using NetArchTest.Rules.Extensions;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.CompilerServices;
-    using NetArchTest.Rules.Extensions;
-    using Mono.Cecil;
-    using NetArchTest.Rules.Dependencies.DataStructures;
 
     /// <summary>
     /// Creates a list of types that can have predicates and conditions applied to it.
@@ -358,7 +358,7 @@
         /// </summary>
         /// <returns>The list of <see cref="TypeDefinition"/> objects in this list.</returns>
         internal IEnumerable<TypeDefinition> GetTypeDefinitions()
-            => _predicate != null ? _predicate.Execute(_types) : _types;
+            => _predicate != null ? (IEnumerable<TypeDefinition>)_predicate.Execute(_types) : _types;
 
         /// <summary>
         /// Returns the list of <see cref="Type"/> objects describing the types in this list.

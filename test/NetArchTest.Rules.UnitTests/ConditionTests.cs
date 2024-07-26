@@ -2,9 +2,6 @@
 
 namespace NetArchTest.Rules.UnitTests
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
     using NetArchTest.TestStructure.CustomAttributes;
     using NetArchTest.TestStructure.Dependencies.Examples;
     using NetArchTest.TestStructure.Dependencies.Implementation;
@@ -12,6 +9,9 @@ namespace NetArchTest.Rules.UnitTests
     using NetArchTest.TestStructure.Interfaces;
     using NetArchTest.TestStructure.NameMatching.Namespace1;
     using NetArchTest.TestStructure.Nested;
+    using System;
+    using System.Linq;
+    using System.Reflection;
     using Xunit;
     using static NetArchTest.TestStructure.Nested.NestedPublic;
 
@@ -940,6 +940,42 @@ namespace NetArchTest.Rules.UnitTests
                 .GetResult();
 
             Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected and provide additional Dependency information.")]
+        public void NotHaveDependencyOnAny_MatchesFound_CheckDependencyInfo()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace(typeof(HasDependency).Namespace)
+                .And()
+                .HaveNameStartingWith("Has")
+                .Should()
+                .NotHaveDependencyOnAny(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .GetResult();
+
+            Assert.False(result.IsSuccessful);
+            Assert.NotNull(result.DepepdencyInfoTypes);
+            Assert.NotNull(result.DepepdencyInfoTypeNames);
+
+            Assert.Collection(result.DepepdencyInfoTypeNames,
+                item => {
+                    Assert.Equal(typeof(HasAnotherDependency).FullName, item.Key);
+                    Assert.Collection(item.Value,
+                        x => Assert.Equal(typeof(AnotherExampleDependency).FullName, x));
+                },
+                item => {
+                    Assert.Equal(typeof(HasDependencies).FullName, item.Key);
+                    Assert.Collection(item.Value.OrderBy(x => x),
+                        x => Assert.Equal(typeof(AnotherExampleDependency).FullName, x),
+                        x => Assert.Equal(typeof(ExampleDependency).FullName, x));
+                },
+                item => {
+                    Assert.Equal(typeof(HasDependency).FullName, item.Key);
+                    Assert.Collection(item.Value,
+                        x => Assert.Equal(typeof(ExampleDependency).FullName, x));
+                });
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have a dependency on all the items in a list.")]
