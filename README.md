@@ -1,3 +1,7 @@
+![NuGet Version](https://img.shields.io/nuget/v/thojaw.TestArchNet)
+![NuGet Version](https://img.shields.io/nuget/vpre/thojaw.TestArchNet)
+
+
 ## 🧬 TestArchNet
 
 This is a fork of [Ben Morris` NetArchTest](https://github.com/BenMorris/NetArchTest). It has been extended with a few custom features.  
