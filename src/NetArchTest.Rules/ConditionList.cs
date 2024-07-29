@@ -113,7 +113,7 @@
         /// <returns>An set of conditions that can be applied to a list of classes.</returns>
         /// <remarks>And() has higher priority than Or() and it is computed first.</remarks>
         public Conditions And()
-            => new Conditions(_types, _should, _sequence);
+            => new(_types, _should, _sequence);
 
         /// <summary>
         /// Specifies that any subsequent conditions should be treated as part of an "or" condition.

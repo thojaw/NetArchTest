@@ -11,7 +11,7 @@
     /// </summary>   
     internal class TypeReferenceTree<T>
     {
-        private readonly StartOfTypeNode _root = new StartOfTypeNode();
+        private readonly StartOfTypeNode _root = new();
 
         public NameNode GetNode(TypeReference reference)
         {          
@@ -62,7 +62,7 @@
         [DebuggerDisplay("StartOfTypeNode (namespaces : {namespaces.Count})")]
         public sealed class StartOfTypeNode
         {
-            private Dictionary<string, NamespaceNode> namespaces { get; set; } = new Dictionary<string, NamespaceNode>();
+            private Dictionary<string, NamespaceNode> namespaces { get; set; } = [];
 
             public NamespaceNode GetNamespace(string @namespace)
             {
@@ -81,7 +81,7 @@
         [DebuggerDisplay("NamespaceNode (names : {names.Count})")]
         public sealed class NamespaceNode
         {
-            private Dictionary<string, NameNode> names { get; set; } = new Dictionary<string, NameNode>();
+            private Dictionary<string, NameNode> names { get; set; } = [];
 
             public NameNode GetName(string name)
             {                
@@ -126,7 +126,7 @@
             
             public NameNode AddTypeSpecification(TypeSpecification typeSpecification)
             {
-                typeSpecifications = typeSpecifications ?? new Dictionary<int, NameNode>();
+                typeSpecifications = typeSpecifications ?? [];
 
                 int specificationNumber = (int)typeSpecification.MetadataType;
                 if (typeSpecification.IsArray)

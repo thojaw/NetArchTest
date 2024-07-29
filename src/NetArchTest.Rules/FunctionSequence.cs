@@ -18,7 +18,7 @@
         /// </summary>
         internal FunctionSequence()
         {
-            _groups = new List<List<FunctionCall>>();
+            _groups = [];
             CreateGroup();
         }
 
@@ -35,7 +35,7 @@
         /// </summary>
         internal void CreateGroup()
         {
-            _groups.Add(new List<FunctionCall>());
+            _groups.Add([]);
         }
 
         /// <summary>
