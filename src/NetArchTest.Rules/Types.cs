@@ -20,22 +20,21 @@
         /// <summary>
         /// Keep references here for lookup or later disposal
         /// </summary>
-        private readonly Dictionary<string, AssemblyDefinition> _assemblyDefinitions = new Dictionary<string, AssemblyDefinition>();
+        private readonly Dictionary<string, AssemblyDefinition> _assemblyDefinitions = [];
 
         /// <summary>
         /// The list of types represented by this instance.
         /// </summary>
-        private readonly List<TypeDefinition> _types = new List<TypeDefinition>();
+        private readonly List<TypeDefinition> _types = [];
 
         private FunctionSequence _predicate = null;
 
         /// <summary>
         /// The list of namespaces to exclude from the current domain.
         /// </summary>
-        private static readonly List<string> _exclusionList = new List<string>
-        { "System", "Microsoft", "Mono.Cecil", "netstandard", "NetArchTest.Rules", "<Module>", "xunit", "<PrivateImplementationDetails>" };
+        private static readonly List<string> _exclusionList = ["System", "Microsoft", "Mono.Cecil", "netstandard", "NetArchTest.Rules", "<Module>", "xunit", "<PrivateImplementationDetails>"];
 
-        private static readonly NamespaceTree _exclusionTree = new NamespaceTree(_exclusionList);
+        private static readonly NamespaceTree _exclusionTree = new(_exclusionList);
 
         /// <summary>
         /// Prevents any external class initializing a new instance of the <see cref="Types"/> class.
@@ -75,10 +74,7 @@
         /// <returns>A list of types that can have predicates and conditions applied to it.</returns>
         public static Types InAssembly(Assembly assembly, IEnumerable<string> searchDirectories = null)
         {
-            if (assembly == null)
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
+            ArgumentNullException.ThrowIfNull(assembly);
 
             return InAssemblies(new List<Assembly> { assembly }, searchDirectories);
         }
@@ -97,7 +93,7 @@
         private Types LoadAssemblies(IEnumerable<Assembly> assemblies, IEnumerable<string> searchDirectories = null)
         {
             var directories = searchDirectories?.ToList()
-                ?? new List<string>();
+                ?? [];
 
             foreach (var assembly in assemblies)
             {
@@ -108,7 +104,7 @@
 
                 AssemblyDefinition assemblyDef;
 
-                if (directories.Any())
+                if (directories.Count != 0)
                 {
                     var defaultAssemblyResolver = new DefaultAssemblyResolver();
 
@@ -293,7 +289,7 @@
             }
 
             var types = new List<TypeDefinition>();
-            var directories = searchDirectories?.ToList() ?? new List<string>();
+            var directories = searchDirectories?.ToList() ?? [];
 
             if (!Directory.Exists(path))
             {
@@ -303,7 +299,7 @@
             var files = Directory.GetFiles(path, "*.dll");
             var readerParams = new ReaderParameters();
 
-            if (directories.Any())
+            if (directories.Count != 0)
             {
                 var defaultAssemblyResolver = new DefaultAssemblyResolver();
 
@@ -372,21 +368,21 @@
         /// </summary>
         /// <returns>A list of types onto which you can apply a series of filters.</returns>
         public Predicates That()
-            => new Predicates(this);
+            => new(this);
 
         /// <summary>
         /// Applies a set of conditions to the list of types.
         /// </summary>
         /// <returns></returns>
         public Conditions Should()
-            => new Conditions(this, true);
+            => new(this, true);
 
         /// <summary>
         /// Applies a negative set of conditions to the list of types.
         /// </summary>
         /// <returns></returns>
         public Conditions ShouldNot()
-            => new Conditions(this, false);
+            => new(this, false);
 
         /// <summary>
         /// Reads the assembly, ignoring a BadImageFormatException
@@ -420,10 +416,7 @@
         /// <inheritdoc />
         public void Dispose()
         {
-            if (_alreadyDisposed)
-            {
-                throw new ObjectDisposedException(GetType().FullName);
-            }
+            ObjectDisposedException.ThrowIf(_alreadyDisposed, GetType().FullName);
 
             foreach (var type in _assemblyDefinitions.Values)
             {

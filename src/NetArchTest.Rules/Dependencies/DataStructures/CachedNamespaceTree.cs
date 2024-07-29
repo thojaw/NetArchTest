@@ -20,7 +20,7 @@
         /// Searching search tree is costly (it requires a lot of operations on strings like SubString, IndexOf).
         /// For a given type we always get the same answer, so let us cache what search tree returns.
         /// </summary>        
-        private readonly TypeReferenceTree<string[]> _cachedAnswersFromSearchTree = new TypeReferenceTree<string[]>(); 
+        private readonly TypeReferenceTree<string[]> _cachedAnswersFromSearchTree = new(); 
         
         public IEnumerable<string> GetAllMatchingNames(TypeReference type)
         {

@@ -15,8 +15,8 @@
             return await Task.FromResult<IEnumerable<Widget>>(
                 new List<Widget>
                 {
-                    new Widget{ Id = 1, Name = "Widget 1", Invalid = false },
-                    new Widget{ Id = 2, Name = "Widget 2", Invalid = true }
+                    new() { Id = 1, Name = "Widget 1", Invalid = false },
+                    new() { Id = 2, Name = "Widget 2", Invalid = true }
                 });
         }
 

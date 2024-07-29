@@ -38,7 +38,7 @@
         private sealed class Node
         {
             /// <summary> Maps child namespace to its root node. </summary>
-            private Dictionary<string, Node> Nodes { get; } = new Dictionary<string, Node>();
+            private Dictionary<string, Node> Nodes { get; } = [];
                         
             public bool IsTerminated
             {
@@ -94,7 +94,7 @@
         }
 
         /// <summary> Holds the root for the namespace tree. </summary>
-        private readonly Node _root = new Node();
+        private readonly Node _root = new();
 
         private static readonly char[] _namespaceSeparators = new char[] { '.', ':', '/', '+' };
 

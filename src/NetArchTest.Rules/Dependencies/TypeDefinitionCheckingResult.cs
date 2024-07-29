@@ -25,7 +25,7 @@
         private readonly ISearchTree _searchTree;
         
         /// <summary> The list of dependencies that have been found in the search.</summary>
-        private HashSet<string> _foundDependencies = new HashSet<string>();
+        private HashSet<string> _foundDependencies = [];
         private bool _hasDependencyFromOutsideOfSearchTree;
        
 

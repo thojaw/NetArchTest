@@ -42,14 +42,14 @@
         /// </summary>
         /// <returns>A condition that tests classes against a given criteria.</returns>
         public Conditions Should()
-            => new Conditions(_types.UsingPredicate(_sequence), true);
+            => new(_types.UsingPredicate(_sequence), true);
 
         /// <summary>
         /// Links a predicate defining a set of classes to a condition that tests them.
         /// </summary>
         /// <returns>A condition that tests classes against a given criteria.</returns>
         public Conditions ShouldNot()
-            => new Conditions(_types.UsingPredicate(_sequence), false);
+            => new(_types.UsingPredicate(_sequence), false);
 
         /// <summary>
         /// Returns the type definitions returned by these predicate.
@@ -81,7 +81,7 @@
         /// <returns>An set of predicates that can be applied to a list of classes.</returns>
         /// <remarks>And() has higher priority than Or() and it is computed first.</remarks>
         public Predicates And()
-            => new Predicates(_types, _sequence);
+            => new(_types, _sequence);
 
         /// <summary>
         /// Specifies that any subsequent predicates should be treated as part of an "or" condition.

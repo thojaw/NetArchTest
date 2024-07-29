@@ -67,7 +67,7 @@
         /// </summary>
         /// <returns>Instance of <see cref="TestResult"/></returns>
         internal static TestResult Success()
-            => new TestResult
+            => new()
             {
                 IsSuccessful = true
             };
@@ -77,7 +77,7 @@
         /// </summary>
         /// <returns>Instance of <see cref="TestResult"/></returns>
         internal static TestResult Failure(IReadOnlyList<TypeDefinition> failingTypes, IDictionary<TypeDefinition, IEnumerable<string>> dependencyInfo = null)
-            => new TestResult
+            => new()
             {
                 IsSuccessful = false,
                 _failingTypes = failingTypes,

@@ -13,7 +13,7 @@
         private readonly Func<Types> _typesLocator;
 
         /// <summary> The list of tests that have been added to the policy. </summary>
-        private readonly List<PolicyTest> _tests = new List<PolicyTest>();
+        private readonly List<PolicyTest> _tests = [];
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PolicyDefinition"/> class.
