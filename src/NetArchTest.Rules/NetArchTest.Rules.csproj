@@ -25,4 +25,7 @@
     <None Include="package.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="NetArchTest.Rules.UnitTests"/>
+  </ItemGroup>
 </Project>

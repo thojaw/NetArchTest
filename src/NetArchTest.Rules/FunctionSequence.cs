@@ -57,7 +57,7 @@
                 foreach (var func in group)
                 {
                     var funcResults = func.FunctionDelegate.DynamicInvoke(results, func.Value, func.Condition) as TypeDefinitionResult;
-                    results = funcResults.ToList();
+                    results = [.. funcResults];
 
                     if (funcResults.DependencyInfo != null)
                     {

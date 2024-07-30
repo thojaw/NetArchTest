@@ -842,7 +842,7 @@ namespace NetArchTest.Rules.UnitTests
                 .And()
                 .HaveNameStartingWith("Has")
                 .Should()
-                .HaveDependencyOnAny(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .HaveDependencyOnAny([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetResult();
 
             Assert.True(result.IsSuccessful);
@@ -888,7 +888,7 @@ namespace NetArchTest.Rules.UnitTests
                 .And()
                 .HaveNameStartingWith("HasDependencies")
                 .Should()
-                .HaveDependencyOnAll(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .HaveDependencyOnAll([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetResult();
 
             Assert.True(result.IsSuccessful);
@@ -904,7 +904,7 @@ namespace NetArchTest.Rules.UnitTests
                 .And()
                 .HaveNameStartingWith("HasDependency")
                 .Should()
-                .OnlyHaveDependenciesOn(new[] { typeof(ExampleDependency).FullName, "System" })
+                .OnlyHaveDependenciesOn([typeof(ExampleDependency).FullName, "System"])
                 .GetResult();
 
             Assert.True(result.IsSuccessful);
@@ -936,7 +936,7 @@ namespace NetArchTest.Rules.UnitTests
                 .And()
                 .HaveNameStartingWith("NoDependency")
                 .Should()
-                .NotHaveDependencyOnAny(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .NotHaveDependencyOnAny([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetResult();
 
             Assert.True(result.IsSuccessful);
@@ -952,7 +952,7 @@ namespace NetArchTest.Rules.UnitTests
                 .And()
                 .HaveNameStartingWith("Has")
                 .Should()
-                .NotHaveDependencyOnAny(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .NotHaveDependencyOnAny([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetResult();
 
             Assert.False(result.IsSuccessful);
@@ -988,7 +988,7 @@ namespace NetArchTest.Rules.UnitTests
                 .And()
                 .HaveNameStartingWith("NoDependency")
                 .Should()
-                .NotHaveDependencyOnAll(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .NotHaveDependencyOnAll([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetResult();
 
             Assert.True(result.IsSuccessful);
@@ -1004,7 +1004,7 @@ namespace NetArchTest.Rules.UnitTests
                 .And()
                 .HaveNameStartingWith("HasDependencies")
                 .Should()
-                .HaveDependenciesOtherThan(new[] { typeof(ExampleDependency).FullName, "System" })
+                .HaveDependenciesOtherThan([typeof(ExampleDependency).FullName, "System"])
                 .GetResult();
 
             Assert.True(result.IsSuccessful);

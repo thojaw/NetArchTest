@@ -58,7 +58,7 @@
             // In this example, searching for a dependency on "PatternMatch" should not return "PatternMatchTwo"
 
             // Arrange
-            var search = new global::NetArchTest.Rules.Dependencies.DependencySearch();
+            var search = new Dependencies.DependencySearch();
             var typeList = Types
                 .InAssembly(Assembly.GetAssembly(typeof(HasDependency)))
                 .That()
@@ -78,7 +78,7 @@
             // In this example, searching for a dependency on "NamespaceMatch" should not return classes in "NamespaceMatchToo"
 
             // Arrange
-            var search = new global::NetArchTest.Rules.Dependencies.DependencySearch();
+            var search = new Dependencies.DependencySearch();
             var typeList = Types
                 .InAssembly(Assembly.GetAssembly(typeof(HasDependency)))
                 .That()

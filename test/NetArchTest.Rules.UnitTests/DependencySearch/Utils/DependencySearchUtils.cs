@@ -29,7 +29,7 @@
             RunDependencyTest(subject, dependencyToSearch, expectToFindClass, expectToFindNamespace);
         }
 
-        public static void RunDependencyTest(IEnumerable<Mono.Cecil.TypeDefinition> inputs, Type dependencyToSearch, bool expectToFindClass, bool expectToFindNamespace)
+        public static void RunDependencyTest(IEnumerable<TypeDefinition> inputs, Type dependencyToSearch, bool expectToFindClass, bool expectToFindNamespace)
         {
             // Search against the type name and its namespace - this demonstrates that namespace based searches also work
             FindTypesWithAnyDependencies(inputs, new List<string> { dependencyToSearch.FullName }, expectToFindClass);
@@ -43,12 +43,12 @@
             RunDependencyTest(subject, dependenciesToSearch, expectToFind);
         }
 
-        public static void RunDependencyTest(IEnumerable<Mono.Cecil.TypeDefinition> inputs, IEnumerable<string> dependenciesToSearch, bool expectToFind)
+        public static void RunDependencyTest(IEnumerable<TypeDefinition> inputs, IEnumerable<string> dependenciesToSearch, bool expectToFind)
         {
             FindTypesWithAnyDependencies(inputs, dependenciesToSearch, expectToFind);
         }
                 
-        public static IEnumerable<Mono.Cecil.TypeDefinition> GetTypesThatResideInTheSameNamespaceButWithoutGivenType(params Type[] type)
+        public static IEnumerable<TypeDefinition> GetTypesThatResideInTheSameNamespaceButWithoutGivenType(params Type[] type)
         {
             var types = Types.InAssembly(Assembly.GetAssembly(type.First()))
                      .That()
@@ -60,10 +60,10 @@
             return types.GetTypeDefinitions();
         }
 
-        private static void FindTypesWithAnyDependencies(IEnumerable<Mono.Cecil.TypeDefinition> subjects, IEnumerable<string> dependencies, bool expectToFind)
+        private static void FindTypesWithAnyDependencies(IEnumerable<TypeDefinition> subjects, IEnumerable<string> dependencies, bool expectToFind)
         {
             // Arrange
-            var search = new global::NetArchTest.Rules.Dependencies.DependencySearch();
+            var search = new Dependencies.DependencySearch();
 
             // Act
             // Search against the dependencies

@@ -30,11 +30,11 @@
             // Assert
             // The default behaviour is to return the types that were selected
             Assert.Single(resultSelected);
-            Assert.Contains<Type>(typeof(AbstractClass), resultSelected);
+            Assert.Contains(typeof(AbstractClass), resultSelected);
 
             // Setting the flag to false will return the types that were NOT selected
             Assert.Single(resultNotSelected);
-            Assert.Contains<Type>(typeof(ConcreteClass), resultNotSelected);
+            Assert.Contains(typeof(ConcreteClass), resultNotSelected);
         }
 
         [Fact(DisplayName = "Setting the Selected flag to false will return the types that fail the sequence in OR based statements (Issue #38).")]
@@ -62,11 +62,11 @@
             // Assert
             // The default behaviour is to return the types that were selected - i.e. everything except ClassB2
             Assert.Equal(4, resultSelected.Count());
-            Assert.DoesNotContain<Type>(typeof(ClassB2), resultSelected);
+            Assert.DoesNotContain(typeof(ClassB2), resultSelected);
 
             // Setting the flag to false will return the types that were NOT selected, i.e. just ClassB2
             Assert.Single(resultNotSelected);
-            Assert.Contains<Type>(typeof(ClassB2), resultNotSelected);
+            Assert.Contains(typeof(ClassB2), resultNotSelected);
         }
     }
 }

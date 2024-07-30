@@ -43,7 +43,7 @@ namespace NetArchTest.Rules.UnitTests
                 .HaveName("ClassA1").GetTypes();
 
             Assert.Single(result); // Only one type found
-            Assert.Equal<Type>(typeof(ClassA1), result.First()); // The correct type found
+            Assert.Equal(typeof(ClassA1), result.First()); // The correct type found
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have a specific name.")]
@@ -57,14 +57,14 @@ namespace NetArchTest.Rules.UnitTests
                 .DoNotHaveName("ClassA1").GetTypes();
 
             Assert.Equal(8, result.Count()); // Eight types found
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(ClassB2), result);
-            Assert.Contains<Type>(typeof(ClassA3), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(ClassB2), result);
+            Assert.Contains(typeof(ClassA3), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected by the start of their name.")]
@@ -78,8 +78,8 @@ namespace NetArchTest.Rules.UnitTests
                 .HaveNameStartingWith("SomeT").GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
         }
 
         [Fact(DisplayName = "Types can be selected by the start of their name using a StringComparison.")]
@@ -93,8 +93,8 @@ namespace NetArchTest.Rules.UnitTests
 		        .HaveNameStartingWith("SomeT", StringComparison.Ordinal).GetTypes();
 
 	        Assert.Single(result); // One type found
-	        Assert.Contains<Type>(typeof(SomeThing), result);
-	        Assert.DoesNotContain<Type>(typeof(SomethingElse), result);
+	        Assert.Contains(typeof(SomeThing), result);
+	        Assert.DoesNotContain(typeof(SomethingElse), result);
         }
 
         [Fact(DisplayName = "Types can be selected if their name does not have a specific start.")]
@@ -108,12 +108,12 @@ namespace NetArchTest.Rules.UnitTests
                 .DoNotHaveNameStartingWith("ClassA").GetTypes();
 
             Assert.Equal(6, result.Count()); // Six types found
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(ClassB2), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(ClassB2), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected if their name does not have a specific start using a StringComparison.")]
@@ -127,10 +127,10 @@ namespace NetArchTest.Rules.UnitTests
 		        .DoNotHaveNameStartingWith("SomeT", StringComparison.Ordinal).GetTypes();
 
 	        Assert.Equal(3, result.Count()); // Three types found
-	        Assert.DoesNotContain<Type>(typeof(SomeThing), result);
-	        Assert.Contains<Type>(typeof(SomethingElse), result);
-	        Assert.Contains<Type>(typeof(SomeEntity), result);
-	        Assert.Contains<Type>(typeof(SomeIdentity), result);
+	        Assert.DoesNotContain(typeof(SomeThing), result);
+	        Assert.Contains(typeof(SomethingElse), result);
+	        Assert.Contains(typeof(SomeEntity), result);
+	        Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected by the end of their name.")]
@@ -144,8 +144,8 @@ namespace NetArchTest.Rules.UnitTests
                 .HaveNameEndingWith("Entity").GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected by the end of their name using a StringComparison.")]
@@ -159,8 +159,8 @@ namespace NetArchTest.Rules.UnitTests
 		        .HaveNameEndingWith("Entity", StringComparison.Ordinal).GetTypes();
 
 	        Assert.Single(result); // One type found
-	        Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.DoesNotContain<Type>(typeof(SomeIdentity), result);
+	        Assert.Contains(typeof(SomeEntity), result);
+            Assert.DoesNotContain(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected if their name does not have a specific end.")]
@@ -174,14 +174,14 @@ namespace NetArchTest.Rules.UnitTests
                 .DoNotHaveNameEndingWith("A1").GetTypes();
 
             Assert.Equal(8, result.Count()); // three types found
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassA3), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(ClassB2), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassA3), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(ClassB2), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected by a regular expression.")]
@@ -195,8 +195,8 @@ namespace NetArchTest.Rules.UnitTests
                 .HaveNameMatching(@"Class\w1").GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassB1), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not conform to a regular expression.")]
@@ -210,13 +210,13 @@ namespace NetArchTest.Rules.UnitTests
                 .DoNotHaveNameMatching(@"Class\w1").GetTypes();
 
             Assert.Equal(7, result.Count()); // Three types found
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassA3), result);
-            Assert.Contains<Type>(typeof(ClassB2), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassA3), result);
+            Assert.Contains(typeof(ClassB2), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected by a the presence of a custom attribute.")]
@@ -230,7 +230,7 @@ namespace NetArchTest.Rules.UnitTests
                 .HaveCustomAttribute(typeof(ClassCustomAttribute)).GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(AttributePresent), result);
+            Assert.Contains(typeof(AttributePresent), result);
         }
 
         [Fact(DisplayName = "Types can be selected by the absence of a custom attribute.")]
@@ -244,10 +244,10 @@ namespace NetArchTest.Rules.UnitTests
                 .DoNotHaveCustomAttribute(typeof(ClassCustomAttribute)).GetTypes();
 
             Assert.Equal(4, result.Count()); // Four types found
-            Assert.Contains<Type>(typeof(NoAttributes), result);
-            Assert.Contains<Type>(typeof(ClassCustomAttribute), result);
-            Assert.Contains<Type>(typeof(InheritAttributePresent), result);
-            Assert.Contains<Type>(typeof(InheritClassCustomAttribute), result);
+            Assert.Contains(typeof(NoAttributes), result);
+            Assert.Contains(typeof(ClassCustomAttribute), result);
+            Assert.Contains(typeof(InheritAttributePresent), result);
+            Assert.Contains(typeof(InheritClassCustomAttribute), result);
         }
 
         [Fact(DisplayName = "Types can be selected by the presence of an inherited custom attribute.")]
@@ -261,8 +261,8 @@ namespace NetArchTest.Rules.UnitTests
                 .HaveCustomAttributeOrInherit(typeof(ClassCustomAttribute)).GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(AttributePresent), result);
-            Assert.Contains<Type>(typeof(InheritAttributePresent), result);
+            Assert.Contains(typeof(AttributePresent), result);
+            Assert.Contains(typeof(InheritAttributePresent), result);
         }
 
         [Fact(DisplayName = "Types can be selected by the absence of an inherited custom attribute.")]
@@ -276,9 +276,9 @@ namespace NetArchTest.Rules.UnitTests
                 .DoNotHaveCustomAttributeOrInherit(typeof(ClassCustomAttribute)).GetTypes();
 
             Assert.Equal(3, result.Count()); // Three types found
-            Assert.Contains<Type>(typeof(NoAttributes), result);
-            Assert.Contains<Type>(typeof(ClassCustomAttribute), result);          
-            Assert.Contains<Type>(typeof(InheritClassCustomAttribute), result);
+            Assert.Contains(typeof(NoAttributes), result);
+            Assert.Contains(typeof(ClassCustomAttribute), result);          
+            Assert.Contains(typeof(InheritClassCustomAttribute), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they inherit from a type.")]
@@ -292,8 +292,8 @@ namespace NetArchTest.Rules.UnitTests
                 .Inherit(typeof(BaseClass)).GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(DerivedClass), result);
-            Assert.Contains<Type>(typeof(DerivedDerivedClass), result);
+            Assert.Contains(typeof(DerivedClass), result);
+            Assert.Contains(typeof(DerivedDerivedClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they inherit from a type from a different assembly")]
@@ -321,8 +321,8 @@ namespace NetArchTest.Rules.UnitTests
                 .DoNotInherit(typeof(BaseClass)).GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(BaseClass), result);
-            Assert.Contains<Type>(typeof(NotDerivedClass), result);
+            Assert.Contains(typeof(BaseClass), result);
+            Assert.Contains(typeof(NotDerivedClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they implement an interface.")]
@@ -336,7 +336,7 @@ namespace NetArchTest.Rules.UnitTests
                 .ImplementInterface(typeof(IExample)).GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(ImplementsExampleInterface), result);
+            Assert.Contains(typeof(ImplementsExampleInterface), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not implement an interface.")]
@@ -350,8 +350,8 @@ namespace NetArchTest.Rules.UnitTests
                 .DoNotImplementInterface(typeof(IExample)).GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(IExample), result);
-            Assert.Contains<Type>(typeof(DoesNotImplementInterface), result);
+            Assert.Contains(typeof(IExample), result);
+            Assert.Contains(typeof(DoesNotImplementInterface), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are abstract.")]
@@ -365,7 +365,7 @@ namespace NetArchTest.Rules.UnitTests
                 .AreAbstract().GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(AbstractClass), result);
+            Assert.Contains(typeof(AbstractClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are not abstract.")]
@@ -379,7 +379,7 @@ namespace NetArchTest.Rules.UnitTests
                 .AreNotAbstract().GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(ConcreteClass), result);
+            Assert.Contains(typeof(ConcreteClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are classes.")]
@@ -393,8 +393,8 @@ namespace NetArchTest.Rules.UnitTests
                 .AreClasses().GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(ExampleClass), result);
-            Assert.Contains<Type>(typeof(ExampleStaticClass), result);
+            Assert.Contains(typeof(ExampleClass), result);
+            Assert.Contains(typeof(ExampleStaticClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are not classes.")]
@@ -408,7 +408,7 @@ namespace NetArchTest.Rules.UnitTests
                 .AreNotClasses().GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(IExampleInterface), result);
+            Assert.Contains(typeof(IExampleInterface), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they have generic parameters.")]
@@ -422,7 +422,7 @@ namespace NetArchTest.Rules.UnitTests
                 .AreGeneric().GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(GenericType<>), result);
+            Assert.Contains(typeof(GenericType<>), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have generic parameters.")]
@@ -436,7 +436,7 @@ namespace NetArchTest.Rules.UnitTests
                 .AreNotGeneric().GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(NonGenericType), result);
+            Assert.Contains(typeof(NonGenericType), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are interfaces.")]
@@ -450,7 +450,7 @@ namespace NetArchTest.Rules.UnitTests
                 .AreInterfaces().GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(IExampleInterface), result);
+            Assert.Contains(typeof(IExampleInterface), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are not interfaces.")]
@@ -464,8 +464,8 @@ namespace NetArchTest.Rules.UnitTests
                 .AreNotInterfaces().GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(ExampleClass), result);
-            Assert.Contains<Type>(typeof(ExampleStaticClass), result);
+            Assert.Contains(typeof(ExampleClass), result);
+            Assert.Contains(typeof(ExampleStaticClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are static.")]
@@ -479,7 +479,7 @@ namespace NetArchTest.Rules.UnitTests
 		        .AreStatic().GetTypes();
 
 	        Assert.Single(result); // One type found
-	        Assert.Contains<Type>(typeof(ExampleStaticClass), result);
+	        Assert.Contains(typeof(ExampleStaticClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are not static.")]
@@ -493,8 +493,8 @@ namespace NetArchTest.Rules.UnitTests
 		        .AreNotStatic().GetTypes();
 
 	        Assert.Equal(2, result.Count()); // Two types found
-            Assert.Contains<Type>(typeof(ExampleClass), result);
-	        Assert.Contains<Type>(typeof(IExampleInterface), result);
+            Assert.Contains(typeof(ExampleClass), result);
+	        Assert.Contains(typeof(IExampleInterface), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they are nested.")]
@@ -597,8 +597,8 @@ namespace NetArchTest.Rules.UnitTests
                 .ArePublic().GetTypes();
 
             Assert.Equal(2, result.Count()); 
-            Assert.Contains<Type>(typeof(PublicClass), result);
-            Assert.Contains<Type>(typeof(PublicClass.PublicClassInternal), result);
+            Assert.Contains(typeof(PublicClass), result);
+            Assert.Contains(typeof(PublicClass.PublicClassInternal), result);
         }
 
         [Fact(DisplayName = "Types can be selected for not being declared as public.")]
@@ -612,8 +612,8 @@ namespace NetArchTest.Rules.UnitTests
                 .AreNotPublic().GetTypes();
 
             Assert.Equal(2, result.Count());
-            Assert.Contains<Type>(typeof(InternalClass), result);
-            Assert.Contains<Type>(typeof(InternalClass.InternalClassNested), result);
+            Assert.Contains(typeof(InternalClass), result);
+            Assert.Contains(typeof(InternalClass.InternalClassNested), result);
         }
 
         [Fact(DisplayName = "Types can be selected for being declared as sealed.")]
@@ -627,7 +627,7 @@ namespace NetArchTest.Rules.UnitTests
                 .AreSealed().GetTypes();
 
             Assert.Single(result); // One result
-            Assert.Contains<Type>(typeof(SealedClass), result);
+            Assert.Contains(typeof(SealedClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected for not being declared as sealed.")]
@@ -641,7 +641,7 @@ namespace NetArchTest.Rules.UnitTests
                 .AreNotSealed().GetTypes();
 
             Assert.Single(result); // One result
-            Assert.Contains<Type>(typeof(NotSealedClass), result);
+            Assert.Contains(typeof(NotSealedClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected for being immutable.")]
@@ -655,9 +655,9 @@ namespace NetArchTest.Rules.UnitTests
                 .AreImmutable().GetTypes();
 
             Assert.Equal(3, result.Count()); // Three types found
-            Assert.Contains<Type>(typeof(ImmutableClass1), result);
-            Assert.Contains<Type>(typeof(ImmutableClass2), result);
-            Assert.Contains<Type>(typeof(ImmutableClass3), result);
+            Assert.Contains(typeof(ImmutableClass1), result);
+            Assert.Contains(typeof(ImmutableClass2), result);
+            Assert.Contains(typeof(ImmutableClass3), result);
         }
 
         [Fact(DisplayName = "Types can be selected for being mutable.")]
@@ -671,9 +671,9 @@ namespace NetArchTest.Rules.UnitTests
                 .AreMutable().GetTypes();
 
             Assert.Equal(3, result.Count()); // Three types found
-            Assert.Contains<Type>(typeof(PartiallyMutableClass1), result);
-            Assert.Contains<Type>(typeof(PartiallyMutableClass2), result);
-            Assert.Contains<Type>(typeof(MutableClass), result);
+            Assert.Contains(typeof(PartiallyMutableClass1), result);
+            Assert.Contains(typeof(PartiallyMutableClass2), result);
+            Assert.Contains(typeof(MutableClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected for having only nullable memebers.")]
@@ -691,7 +691,7 @@ namespace NetArchTest.Rules.UnitTests
                 .OnlyHaveNullableMembers().GetTypes();
 
             Assert.Single(result); // One result
-            Assert.Contains<Type>(typeof(NullableClass), result);
+            Assert.Contains(typeof(NullableClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected for having non-nullable memebers.")]
@@ -709,10 +709,10 @@ namespace NetArchTest.Rules.UnitTests
                 .HaveSomeNonNullableMembers().GetTypes();
 
             Assert.Equal(4, result.Count()); // Four types found
-            Assert.Contains<Type>(typeof(NonNullableClass1), result);
-            Assert.Contains<Type>(typeof(NonNullableClass2), result);
-            Assert.Contains<Type>(typeof(NonNullableClass3), result);
-            Assert.Contains<Type>(typeof(NonNullableClass4), result);
+            Assert.Contains(typeof(NonNullableClass1), result);
+            Assert.Contains(typeof(NonNullableClass2), result);
+            Assert.Contains(typeof(NonNullableClass3), result);
+            Assert.Contains(typeof(NonNullableClass4), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they reside in a namespace.")]
@@ -725,9 +725,9 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(3, result.Count()); // Three types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassB1), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not reside in a namespace.")]
@@ -742,13 +742,13 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(7, result.Count()); // Seven types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they reside in a namespace that matches a regular expression.")]
@@ -761,7 +761,7 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(Match1), result);
+            Assert.Contains(typeof(Match1), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not reside in a namespace that matches a regular expression.")]
@@ -776,7 +776,7 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Single(result); // One type found
-            Assert.Contains<Type>(typeof(MatchA), result);
+            Assert.Contains(typeof(MatchA), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they reside in a namespace that starts with a name part.")]
@@ -789,15 +789,15 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(9, result.Count()); // Nine types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassA3), result);
-            Assert.Contains<Type>(typeof(ClassB2), result);
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassA3), result);
+            Assert.Contains(typeof(ClassB2), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not reside in a namespace that start with name part.")]
@@ -812,13 +812,13 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(7, result.Count()); // Seven types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they reside in a namespace that ends with a name part.")]
@@ -831,7 +831,7 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(3, result.Count()); // Three types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA1), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not reside in a namespace that end with name part.")]
@@ -844,15 +844,15 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(9, result.Count()); // Nine types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassA3), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(ClassB2), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassA3), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(ClassB2), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they reside in a namespace that contains a name part.")]
@@ -865,15 +865,15 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(9, result.Count()); // Nine types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassA3), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(ClassB2), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassA3), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(ClassB2), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types (nested) can be selected if they reside in a namespace that contains a name part.")]
@@ -886,7 +886,7 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(19, result.Count()); 
-            Assert.Contains<Type>(typeof(NestedPublic.NestedPublicClass), result);
+            Assert.Contains(typeof(NestedPublic.NestedPublicClass), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not reside in a namespace that contains name part.")]
@@ -901,13 +901,13 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(7, result.Count()); // Three types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Selecting by namespace will return types in nested namespaces.")]
@@ -921,15 +921,15 @@ namespace NetArchTest.Rules.UnitTests
 
             // Should return all the types that are in three nested namespaces
             Assert.Equal(9, result.Count()); // Nine types found
-            Assert.Contains<Type>(typeof(ClassA1), result);
-            Assert.Contains<Type>(typeof(ClassA2), result);
-            Assert.Contains<Type>(typeof(ClassA3), result);
-            Assert.Contains<Type>(typeof(ClassB1), result);
-            Assert.Contains<Type>(typeof(ClassB2), result);
-            Assert.Contains<Type>(typeof(SomeThing), result);
-            Assert.Contains<Type>(typeof(SomethingElse), result);
-            Assert.Contains<Type>(typeof(SomeEntity), result);
-            Assert.Contains<Type>(typeof(SomeIdentity), result);
+            Assert.Contains(typeof(ClassA1), result);
+            Assert.Contains(typeof(ClassA2), result);
+            Assert.Contains(typeof(ClassA3), result);
+            Assert.Contains(typeof(ClassB1), result);
+            Assert.Contains(typeof(ClassB2), result);
+            Assert.Contains(typeof(SomeThing), result);
+            Assert.Contains(typeof(SomethingElse), result);
+            Assert.Contains(typeof(SomeEntity), result);
+            Assert.Contains(typeof(SomeIdentity), result);
         }
 
         [Fact(DisplayName = "Types can be selected if they have a dependency on a specific item.")]
@@ -944,8 +944,8 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Equal<Type>(typeof(HasDependencies), result.First());
-            Assert.Equal<Type>(typeof(HasDependency), result.Last());
+            Assert.Equal(typeof(HasDependencies), result.First());
+            Assert.Equal(typeof(HasDependency), result.Last());
         }
 
         [Fact(DisplayName = "Types can be selected if they have a dependency on any item in a list.")]
@@ -956,13 +956,13 @@ namespace NetArchTest.Rules.UnitTests
                 .That()
                 .ResideInNamespace(typeof(HasDependency).Namespace)
                 .And()
-                .HaveDependencyOnAny(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .HaveDependencyOnAny([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetTypes();
 
             Assert.Equal(3, result.Count()); // Three types found - i.e. the classes with dependencies on at least one of the items
-            Assert.Equal<Type>(typeof(HasAnotherDependency), result.First());
-            Assert.Equal<Type>(typeof(HasDependencies), result.Skip(1).First());
-            Assert.Equal<Type>(typeof(HasDependency), result.Last());
+            Assert.Equal(typeof(HasAnotherDependency), result.First());
+            Assert.Equal(typeof(HasDependencies), result.Skip(1).First());
+            Assert.Equal(typeof(HasDependency), result.Last());
         }
 
         [Fact(DisplayName = "Types can be selected if they have a dependency on all the items in a list.")]
@@ -973,11 +973,11 @@ namespace NetArchTest.Rules.UnitTests
                 .That()
                 .ResideInNamespace(typeof(HasDependency).Namespace)
                 .And()
-                .HaveDependencyOnAll(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .HaveDependencyOnAll([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetTypes();
 
             Assert.Single(result); // Only one type found - i.e. the class with dependencies on both items
-            Assert.Equal<Type>(typeof(HasDependencies), result.First()); // The correct type found
+            Assert.Equal(typeof(HasDependencies), result.First()); // The correct type found
         }
 
         [Fact(DisplayName = "Types can be selected if they only have a dependency on any item in a list.")]
@@ -988,12 +988,12 @@ namespace NetArchTest.Rules.UnitTests
                 .That()
                 .ResideInNamespace(typeof(HasDependency).Namespace)
                 .And()
-                .OnlyHaveDependenciesOn(new[] { typeof(ExampleDependency).FullName, "System" })
+                .OnlyHaveDependenciesOn([typeof(ExampleDependency).FullName, "System"])
                 .GetTypes();
 
             Assert.Equal(2, result.Count());          
-            Assert.Equal<Type>(typeof(HasDependency), result.First());
-            Assert.Equal<Type>(typeof(NoDependency), result.Skip(1).First());
+            Assert.Equal(typeof(HasDependency), result.First());
+            Assert.Equal(typeof(NoDependency), result.Skip(1).First());
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have a dependency on another type.")]
@@ -1008,8 +1008,8 @@ namespace NetArchTest.Rules.UnitTests
                 .GetTypes();
 
             Assert.Equal(2, result.Count()); // Two types found
-            Assert.Equal<Type>(typeof(HasAnotherDependency), result.First());
-            Assert.Equal<Type>(typeof(NoDependency), result.Last());
+            Assert.Equal(typeof(HasAnotherDependency), result.First());
+            Assert.Equal(typeof(NoDependency), result.Last());
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have a dependency on any item in a list.")]
@@ -1020,11 +1020,11 @@ namespace NetArchTest.Rules.UnitTests
                 .That()
                 .ResideInNamespace(typeof(HasDependency).Namespace)
                 .And()
-                .DoNotHaveDependencyOnAny(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .DoNotHaveDependencyOnAny([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetTypes();
 
             Assert.Single(result); // Only one type found
-            Assert.Equal<Type>(typeof(NoDependency), result.First()); // The correct type found - i.e. it's the only type with no matching dependencies at all
+            Assert.Equal(typeof(NoDependency), result.First()); // The correct type found - i.e. it's the only type with no matching dependencies at all
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have a dependency on all the items in a list.")]
@@ -1035,13 +1035,13 @@ namespace NetArchTest.Rules.UnitTests
                 .That()
                 .ResideInNamespace(typeof(HasDependency).Namespace)
                 .And()
-                .DoNotHaveDependencyOnAll(new[] { typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName })
+                .DoNotHaveDependencyOnAll([typeof(ExampleDependency).FullName, typeof(AnotherExampleDependency).FullName])
                 .GetTypes();
 
             Assert.Equal(3, result.Count()); // Three types found - i.e. the classes with dependencies on at least one of the items
-            Assert.Equal<Type>(typeof(HasAnotherDependency), result.First());
-            Assert.Equal<Type>(typeof(HasDependency), result.Skip(1).First());
-            Assert.Equal<Type>(typeof(NoDependency), result.Last());
+            Assert.Equal(typeof(HasAnotherDependency), result.First());
+            Assert.Equal(typeof(HasDependency), result.Skip(1).First());
+            Assert.Equal(typeof(NoDependency), result.Last());
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have a dependency on any item in a list.")]
@@ -1052,12 +1052,12 @@ namespace NetArchTest.Rules.UnitTests
                 .That()
                 .ResideInNamespace(typeof(HasDependency).Namespace)
                 .And()
-                .HaveDependenciesOtherThan(new[] { typeof(ExampleDependency).FullName, "System" })
+                .HaveDependenciesOtherThan([typeof(ExampleDependency).FullName, "System"])
                 .GetTypes();
 
             Assert.Equal(2, result.Count());
-            Assert.Equal<Type>(typeof(HasAnotherDependency), result.First());
-            Assert.Equal<Type>(typeof(HasDependencies), result.Skip(1).First());
+            Assert.Equal(typeof(HasAnotherDependency), result.First());
+            Assert.Equal(typeof(HasDependencies), result.Skip(1).First());
         }
 
         [Fact(DisplayName = "Types can be selected according to a custom rule.")]
@@ -1075,7 +1075,7 @@ namespace NetArchTest.Rules.UnitTests
 
             // ClassA1 has been returned
             Assert.Single(result);
-            Assert.Equal<Type>(typeof(ClassA1), result.First());
+            Assert.Equal(typeof(ClassA1), result.First());
 
             // The custom rule was executed at least once
             Assert.True(rule.TestMethodCalled);
@@ -1094,7 +1094,7 @@ namespace NetArchTest.Rules.UnitTests
                 .MeetCustomRule(customRule)
                 .GetResult();
             
-            Assert.True(customRule.TimesTimesCalled == 1);
+            Assert.Equal(1, customRule.TimesTimesCalled);
         }
     }
 }
