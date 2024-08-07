@@ -178,7 +178,7 @@
             // Act
             var result = search.FindTypesThatHaveDependencyOnAny(inputTypes, dependenciesToSearch);
 
-            Assert.Equal(inputTypes.Count(), result.Count());
+            Assert.Equal(inputTypes.Count(), result.Positive.Count);
         }
 
         private void FindTypesWithAllDependencies(IEnumerable<TypeDefinition> inputTypes, IEnumerable<string> dependenciesToSearch)
@@ -190,7 +190,7 @@
             var result = search.FindTypesThatHaveDependencyOnAll(inputTypes, dependenciesToSearch);
 
             // Assert
-            Assert.Equal(inputTypes.Count(), result.Count());
+            Assert.Equal(inputTypes.Count(), result.Positive.Count);
         }
 
         /// <summary>

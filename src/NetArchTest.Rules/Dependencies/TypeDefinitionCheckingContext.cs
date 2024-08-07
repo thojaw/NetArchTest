@@ -17,6 +17,7 @@ namespace NetArchTest.Rules.Dependencies
         public TypeDefinitionCheckingContext(TypeDefinition typeToCheck, TypeDefinitionCheckingResult.SearchType searchType, ISearchTree searchTree, bool searchForDependencyInFieldConstant = false)
         {
             _typeToCheck = typeToCheck;
+
             _result = new TypeDefinitionCheckingResult(searchType, searchTree);
             _searchForDependencyInFieldConstant = searchForDependencyInFieldConstant;
         }

@@ -956,8 +956,8 @@ namespace NetArchTest.Rules.UnitTests
                 .GetResult();
 
             Assert.False(result.IsSuccessful);
-            Assert.NotNull(result.DepepdencyInfoTypes);
-            Assert.NotNull(result.DepepdencyInfoTypeNames);
+            Assert.NotEmpty(result.DepepdencyInfoTypes);
+            Assert.NotEmpty(result.DepepdencyInfoTypeNames);
 
             Assert.Collection(result.DepepdencyInfoTypeNames,
                 item => {
@@ -976,6 +976,25 @@ namespace NetArchTest.Rules.UnitTests
                     Assert.Collection(item.Value,
                         x => Assert.Equal(typeof(ExampleDependency).FullName, x));
                 });
+        }
+
+        [Fact(DisplayName = "Types can be selected and provide additional Dependency information using <Only have>.")]
+        public void OnlyHaveDependenciesOn_MatchesFound_CheckDependencyInfo()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace(typeof(HasDependency).Namespace)
+                .And()
+                .HaveNameStartingWith("HasDep")
+                .Should()
+                .OnlyHaveDependenciesOn(new[] { typeof(ExampleDependency).FullName, "System" })
+                .GetResult();
+
+            Assert.False(result.IsSuccessful);
+            Assert.NotEmpty(result.FailingTypeNames);
+            Assert.NotEmpty(result.DepepdencyInfoTypes);
+            Assert.NotEmpty(result.DepepdencyInfoTypeNames);
         }
 
         [Fact(DisplayName = "Types can be selected if they do not have a dependency on all the items in a list.")]

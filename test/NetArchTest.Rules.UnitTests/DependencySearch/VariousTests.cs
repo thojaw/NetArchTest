@@ -69,7 +69,7 @@
             var result = search.FindTypesThatHaveDependencyOnAll(typeList, new List<string> { typeof(PatternMatch).FullName });
 
             // Assert: Before PR#36 this would have returned PatternMatchToo in the results
-            Assert.Empty(result); // No results returned
+            Assert.Empty(result.Positive); // No results returned
         }
 
         [Fact(DisplayName = "A dependency search will not return false positives for pattern matched namespaces.")]
@@ -89,7 +89,7 @@
             var result = search.FindTypesThatHaveDependencyOnAll(typeList, new List<string> { typeof(PatternMatch).Namespace });
 
             // Assert: Before PR#36 this would have returned classes in NamespaceMatchToo in the results
-            Assert.Empty(result); // No results returned
+            Assert.Empty(result.Positive); // No results returned
         }
     }
 }

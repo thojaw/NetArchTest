@@ -67,7 +67,7 @@
 
             // Act
             // Search against the dependencies
-            var resultClass = search.FindTypesThatHaveDependencyOnAny(subjects, dependencies).Keys.ToList();
+            var resultClass = search.FindTypesThatHaveDependencyOnAny(subjects, dependencies).Positive.Keys.ToList();
 
             // Assert
             if (expectToFind)

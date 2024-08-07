@@ -101,7 +101,7 @@
             Assert.False(resultSucceed.HasViolations);
             Assert.Single(resultSucceed.Results);
             Assert.True(resultFail.HasViolations);
-            Assert.Equal(2, resultFail.Results.Count());
+            Assert.Equal(2, resultFail.Results.Count);
         }
 
         [Fact(DisplayName = "Rule names and descriptions are optional")]

@@ -120,7 +120,7 @@
                 .GetResult();
 
             Assert.False(result.IsSuccessful);
-            Assert.Equal(2, result.FailingTypes.Count()); // two types found
+            Assert.Equal(2, result.FailingTypes.Count); // two types found
             Assert.Contains(typeof(ClassB1), result.FailingTypes);
             Assert.Contains(typeof(ClassB2), result.FailingTypes);
         }
@@ -137,7 +137,7 @@
                 .GetResult();
 
             Assert.False(result.IsSuccessful);
-            Assert.Equal(3, result.FailingTypes.Count()); // three types found
+            Assert.Equal(3, result.FailingTypes.Count); // three types found
             Assert.Contains(typeof(ClassA1), result.FailingTypes);
             Assert.Contains(typeof(ClassA2), result.FailingTypes);
             Assert.Contains(typeof(ClassA3), result.FailingTypes);

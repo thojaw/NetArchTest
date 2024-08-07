@@ -272,7 +272,7 @@ namespace NetArchTest.Rules
                 var typeDefinitions = input.ToList();
             
                 var search = new DependencySearch();
-                var matchingTypes = search.FindTypesThatHaveDependencyOnAny(typeDefinitions, dependencies);
+                var matchingTypes = search.FindTypesThatHaveDependencyOnAny(typeDefinitions, dependencies).Positive;
 
                 return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
@@ -287,7 +287,7 @@ namespace NetArchTest.Rules
                 var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
             
                 var search = new DependencySearch();
-                var matchingTypes = search.FindTypesThatHaveDependencyOnAnyMatching(typeDefinitions, r);
+                var matchingTypes = search.FindTypesThatHaveDependencyOnAnyMatching(typeDefinitions, r).Positive;
 
                 return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
@@ -301,7 +301,7 @@ namespace NetArchTest.Rules
                 var typeDefinitions = input.ToList();
             
                 var search = new DependencySearch();
-                var matchingTypes = search.FindTypesThatHaveDependencyOnAll(typeDefinitions, dependencies);
+                var matchingTypes = search.FindTypesThatHaveDependencyOnAll(typeDefinitions, dependencies).Positive;
 
                 return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
@@ -315,7 +315,7 @@ namespace NetArchTest.Rules
                 var typeDefinitions = input.ToList();
             
                 var search = new DependencySearch();
-                var matchingTypes = search.FindTypesThatOnlyHaveDependenciesOnAnyOrNone(typeDefinitions, dependencies);
+                var matchingTypes = search.FindTypesThatOnlyHaveDependenciesOnAnyOrNone(typeDefinitions, dependencies).Positive;
 
                 return new TypeDefinitionResult(condition ? matchingTypes.Keys : typeDefinitions.Except(matchingTypes.Keys), matchingTypes);
             };
