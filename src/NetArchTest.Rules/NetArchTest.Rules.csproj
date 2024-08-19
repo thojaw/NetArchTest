@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net8</TargetFramework>
-    <Version>1.4.6-beta1</Version>
-    <FileVersion>1.4.6-beta1</FileVersion>
+    <Version>1.4.7-beta1</Version>
+    <FileVersion>1.4.7-beta1</FileVersion>
     <AssemblyVersion>1.4.0.0</AssemblyVersion>
     <Authors>Ben Morris; Thomas Haid</Authors>
     <Product>TestArchNet</Product>

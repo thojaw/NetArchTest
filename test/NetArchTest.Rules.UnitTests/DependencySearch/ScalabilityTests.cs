@@ -80,7 +80,7 @@
         [Fact(DisplayName = "Time to search all dependencies ~ O(n+m), n - total number of members in all input types; m - number of dependencies to search",
               Timeout = 60000,
               Skip = "When using in github.com actions, this test cannot be run reliably.")]
-        public async void FindTypesWithAllDependencies_TimeGrowsLinearly()
+        public async Task FindTypesWithAllDependencies_TimeGrowsLinearly()
         {
             // Arrange
             var runner = new Runner(iterationCount: 9, repeatCount: 2);
@@ -125,7 +125,7 @@
         [Fact(DisplayName = "Time to search any dependency ~ O(n+m), n - total number of members in all input types; m - number of dependencies to search", 
             Timeout = 60000,
             Skip = "When using in github.com actions, this test cannot be run reliably.")]
-        public async void FindTypesWithAnyDependencies_TimeGrowsLinearly()
+        public async Task FindTypesWithAnyDependencies_TimeGrowsLinearly()
         {
             // Arrange
             var toSearchSmallSet = _nonDependenciesToSearchSmallSet.Concat(_dependenciesToSearchSmallSet);
