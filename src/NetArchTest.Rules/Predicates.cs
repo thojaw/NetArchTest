@@ -219,6 +219,186 @@
         }
 
         /// <summary>
+        /// Selects types that have a specific full name.
+        /// </summary>
+        /// <param name="fullName">The full name of the class to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList HaveFullName(IEnumerable<string> fullName)
+        {
+            foreach (var item in fullName)
+            {
+                _sequence.AddFunctionCall(FunctionDelegates.HaveFullName, item, true);
+            }
+
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types that have a specific full name.
+        /// </summary>
+        /// <param name="fullName">The full name of the class to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList HaveFullName(string fullName) => HaveFullName([fullName]);
+
+        /// <summary>
+        /// Selects types that do not have a particular full name.
+        /// </summary>
+        /// <param name="fullName">The full name of the class to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList DoNotHaveFullName(IEnumerable<string> fullName)
+        {
+            foreach (var item in fullName)
+            {
+                _sequence.AddFunctionCall(FunctionDelegates.HaveFullName, item, false);
+            }
+
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types that do not have a particular full name.
+        /// </summary>
+        /// <param name="fullName">The full name of the class to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList DoNotHaveFullName(string fullName) => DoNotHaveFullName([fullName]);
+
+        /// <summary>
+        /// Selects types according to a regular expression matching their full name.
+        /// </summary>
+        /// <param name="pattern">The regular expression pattern to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList HaveFullNameMatching(string pattern)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameMatching, pattern, true);
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types according to a regular expression that does not match their full name.
+        /// </summary>
+        /// <param name="pattern">The regular expression pattern to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList DoNotHaveFullNameMatching(string pattern)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameMatching, pattern, false);
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList HaveFullNameStartingWith(IEnumerable<string> start)
+        {
+            foreach (var item in start)
+            {
+                _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameStartingWith, item, true);
+            }
+
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList HaveFullNameStartingWith(string start) => HaveFullNameStartingWith([start]);
+
+        /// <summary>
+        /// Selects types whose full names start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <param name="comparer">The string comparer.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList HaveFullNameStartingWith(string start, StringComparison comparer)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveFullNameStartingWith(comparer), start, true);
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList DoNotHaveFullNameStartingWith(IEnumerable<string> start)
+        {
+            foreach (var item in start)
+            {
+                _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameStartingWith, item, false);
+            }
+
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList DoNotHaveFullNameStartingWith(string start) => DoNotHaveFullNameStartingWith([start]);
+
+        /// <summary>
+        /// Selects types whose full names do not start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <param name="comparer">The string comparer.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList DoNotHaveFullNameStartingWith(string start, StringComparison comparer)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveFullNameStartingWith(comparer), start, false);
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names end with the specified text.
+        /// </summary>
+        /// <param name="end">The text to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList HaveFullNameEndingWith(string end)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameEndingWith, end, true);
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names end with the specified text.
+        /// </summary>
+        /// <param name="end">The text to match against.</param>
+        /// <param name="comparer">The string comparer.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList HaveFullNameEndingWith(string end, StringComparison comparer)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveFullNameEndingWith(comparer), end, true);
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not end with the specified text.
+        /// </summary>
+        /// <param name="end">The text to match against.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList DoNotHaveFullNameEndingWith(string end)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameEndingWith, end, false);
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not end with the specified text.
+        /// </summary>
+        /// <param name="end">The text to match against.</param>
+        /// <param name="comparer">The string comparer.</param>
+        /// <returns>An updated set of predicates that can be applied to a list of types.</returns>
+        public PredicateList DoNotHaveFullNameEndingWith(string end, StringComparison comparer)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveFullNameEndingWith(comparer), end, false);
+            return new PredicateList(_types, _sequence);
+        }
+
+        /// <summary>
         /// Selects types that are decorated with a specific custom attribute.
         /// </summary>
         /// <param name="attribute">The attribute to match against.</param>
