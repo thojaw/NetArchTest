@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8</TargetFramework>
-    <Version>1.4.7-beta1</Version>
-    <FileVersion>1.4.7-beta1</FileVersion>
+    <Version>1.4.8-beta1</Version>
+    <FileVersion>1.4.8-beta1</FileVersion>
     <AssemblyVersion>1.4.0.0</AssemblyVersion>
     <Authors>Ben Morris; Thomas Haid</Authors>
     <Product>TestArchNet</Product>
-    <Description>A fluent API for .Net Standard that can enforce architectural rules in unit tests.</Description>
-    <Copyright>Copyright (c) 2021 Ben Morris</Copyright>
+    <Description>A fluent API for .Net 8 that can enforce architectural rules in unit tests or anywhere.</Description>
+    <Copyright>Copyright (c) 2021 Ben Morris; (c) 2024 Thomas Haid</Copyright>
     <PackageLicense>https://github.com/thojaw/TestArchNet/blob/master/LICENSE</PackageLicense>
     <PackageIcon>package.png</PackageIcon>
     <RepositoryUrl>https://github.com/thojaw/TestArchNet</RepositoryUrl>
@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <None Include="package.png" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
