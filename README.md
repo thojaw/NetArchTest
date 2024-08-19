@@ -1,10 +1,21 @@
-![NuGet Version](https://img.shields.io/nuget/v/thojaw.TestArchNet)
-![NuGet Version](https://img.shields.io/nuget/vpre/thojaw.TestArchNet)
-
+[![NuGet Version](https://img.shields.io/nuget/v/thojaw.TestArchNet)](https://www.nuget.org/packages/thojaw.TestArchNet/)
+[![NuGet Version](https://img.shields.io/nuget/vpre/thojaw.TestArchNet)](https://www.nuget.org/packages/thojaw.TestArchNet/)
 
 ## 🧬 TestArchNet
 
-This is a fork of [Ben Morris` NetArchTest](https://github.com/BenMorris/NetArchTest). It has been extended with a few custom features.  
+This is a fork of [Ben Morris` NetArchTest](https://github.com/BenMorris/NetArchTest). It has been extended with a few custom features. Also, as this is intended for my personal use,
+I dropped support for other things that others might need.
+
+### Features added
+
+- Updated to .NET 8, dropped netstandard support
+- Ability to dispose results, which unlocks the Assemblies
+- Load from list of assembly files
+- Ability to match not only file names but also full names incl. namespaces
+- Ability to get list of dependency violations if there were any
+- Can also get TypeNames from Condition and Predicate lists
+
+
 From here, this is the original description.
  
 # NetArchTest
