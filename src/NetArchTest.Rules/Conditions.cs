@@ -769,11 +769,18 @@
         /// </summary>
         /// <param name="dependencies">The dependencies to match against. These can be namespaces or specific types.</param>
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
-        public ConditionList HaveDependencyOnAny(params string[] dependencies)
+        public ConditionList HaveDependencyOnAny(IEnumerable<string> dependencies)
         {
             _sequence.AddFunctionCall(FunctionDelegates.HaveDependencyOnAny, dependencies, true);
             return new ConditionList(_types, _should, _sequence);
         }
+
+        /// <summary>
+        /// Selects types that have a dependency on any of the supplied types.
+        /// </summary>
+        /// <param name="dependency">The dependencies to match against. These can be namespaces or specific types.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveDependencyOnAny(string dependency) => HaveDependencyOnAny([dependency]);
 
         /// <summary>
         /// Selects types that have a dependency on any type matching the given regex pattern.
@@ -791,22 +798,36 @@
         /// </summary>
         /// <param name="dependencies">The dependencies to match against. These can be namespaces or specific types.</param>
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
-        public ConditionList HaveDependencyOnAll(params string[] dependencies)
+        public ConditionList HaveDependencyOnAll(IEnumerable<string> dependencies)
         {
             _sequence.AddFunctionCall(FunctionDelegates.HaveDependencyOnAll, dependencies, true);
             return new ConditionList(_types, _should, _sequence);
         }
 
         /// <summary>
+        /// Selects types that have a dependency on all of the particular types.
+        /// </summary>
+        /// <param name="dependency">The dependencies to match against. These can be namespaces or specific types.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveDependencyOnAll(string dependency) => HaveDependencyOnAll([dependency]);
+
+        /// <summary>
         /// Selects types that have a dependency on any of the supplied types and cannot have any other dependency. 
         /// </summary>
         /// <param name="dependencies">The dependencies to match against. These can be namespaces or specific types.</param>
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
-        public ConditionList OnlyHaveDependenciesOn(params string[] dependencies)
+        public ConditionList OnlyHaveDependenciesOn(IEnumerable<string> dependencies)
         {
             _sequence.AddFunctionCall(FunctionDelegates.OnlyHaveDependenciesOnAnyOrNone, dependencies, true);
             return new ConditionList(_types, _should, _sequence);
         }
+
+        /// <summary>
+        /// Selects types that have a dependency on any of the supplied types and cannot have any other dependency. 
+        /// </summary>
+        /// <param name="dependency">The dependencies to match against. These can be namespaces or specific types.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList OnlyHaveDependenciesOn(string dependency) => OnlyHaveDependenciesOn([dependency]);
 
         /// <summary>
         /// Selects types that do not have a dependency on a particular type.
@@ -824,11 +845,18 @@
         /// </summary>
         /// <param name="dependencies">The dependencies to match against. These can be namespaces or specific types.</param>
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
-        public ConditionList NotHaveDependencyOnAny(params string[] dependencies)
+        public ConditionList NotHaveDependencyOnAny(IEnumerable<string> dependencies)
         {
             _sequence.AddFunctionCall(FunctionDelegates.HaveDependencyOnAny, dependencies, false);
             return new ConditionList(_types, _should, _sequence);
         }
+
+        /// <summary>
+        /// Selects types that do not have a dependency on any of the particular types.
+        /// </summary>
+        /// <param name="dependency">The dependencies to match against. These can be namespaces or specific types.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveDependencyOnAny(string dependency) => NotHaveDependencyOnAny([dependency]);
 
         /// <summary>
         /// Selects types that do not have a dependency on any type matching the given regex pattern.
@@ -846,22 +874,36 @@
         /// </summary>
         /// <param name="dependencies">The dependencies to match against. These can be namespaces or specific types.</param>
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
-        public ConditionList NotHaveDependencyOnAll(params string[] dependencies)
+        public ConditionList NotHaveDependencyOnAll(IEnumerable<string> dependencies)
         {
             _sequence.AddFunctionCall(FunctionDelegates.HaveDependencyOnAll, dependencies, false);
             return new ConditionList(_types, _should, _sequence);
         }
 
         /// <summary>
+        /// Selects types that do not have a dependency on all of the particular types.
+        /// </summary>
+        /// <param name="dependency">The dependencies to match against. These can be namespaces or specific types.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveDependencyOnAll(string dependency) => NotHaveDependencyOnAll([dependency]);
+
+        /// <summary>
         /// Selects types that have a dependency other than any of the given dependencies.
         /// </summary>
         /// <param name="dependencies">The dependencies to match against. These can be namespaces or specific types.</param>
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
-        public ConditionList HaveDependenciesOtherThan(params string[] dependencies)
+        public ConditionList HaveDependenciesOtherThan(IEnumerable<string> dependencies)
         {
             _sequence.AddFunctionCall(FunctionDelegates.OnlyHaveDependenciesOnAnyOrNone, dependencies, false);
             return new ConditionList(_types, _should, _sequence);
         }
+
+        /// <summary>
+        /// Selects types that have a dependency other than any of the given dependencies.
+        /// </summary>
+        /// <param name="dependency">The dependencies to match against. These can be namespaces or specific types.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveDependenciesOtherThan(string dependency) => HaveDependenciesOtherThan([dependency]);
 
         /// <summary>
         /// Selects types that meet a custom rule.
