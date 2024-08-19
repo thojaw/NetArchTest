@@ -61,14 +61,14 @@ namespace NetArchTest.Rules.UnitTests
         [Fact(DisplayName = "Types can be selected by the start of their name using a StringComparison.")]
         public void HaveNameStarting_UsingStringComparison_MatchesFound_ClassesSelected()
         {
-	        var result = Types
-		        .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
-		        .That()
-		        .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace3")
-		        .Should()
-		        .HaveNameStartingWith("Some", StringComparison.Ordinal).GetResult();
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace3")
+                .Should()
+                .HaveNameStartingWith("Some", StringComparison.Ordinal).GetResult();
 
-	        Assert.True(result.IsSuccessful);
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact(DisplayName = "Types can be selected if their name does not have a specific start.")]
@@ -87,14 +87,14 @@ namespace NetArchTest.Rules.UnitTests
         [Fact(DisplayName = "Types can be selected if their name does not have a specific start using a StringComparison.")]
         public void NotHaveNameStarting_UsingStringComparison_MatchesFound_ClassesSelected()
         {
-	        var result = Types
-		        .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
-		        .That()
-		        .ResideInNamespace("NetArchTest.TestStructure.NameMatching")
-		        .Should()
-		        .NotHaveNameStartingWith("s", StringComparison.Ordinal).GetResult();
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching")
+                .Should()
+                .NotHaveNameStartingWith("s", StringComparison.Ordinal).GetResult();
 
-	        Assert.True(result.IsSuccessful);
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact(DisplayName = "Types can be selected by the end of their name.")]
@@ -113,14 +113,14 @@ namespace NetArchTest.Rules.UnitTests
         [Fact(DisplayName = "Types can be selected by the end of their name using a StringComparison.")]
         public void HaveNameEnding_UsingStringComparison_MatchesFound_ClassesSelected()
         {
-	        var result = Types
-		        .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
-		        .That()
-		        .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace2.Namespace3.B")
-		        .Should()
-		        .HaveNameEndingWith("ntity").GetResult();
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace2.Namespace3.B")
+                .Should()
+                .HaveNameEndingWith("ntity").GetResult();
 
-	        Assert.True(result.IsSuccessful);
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact(DisplayName = "Types can be selected if their name does not have a specific end.")]
@@ -139,14 +139,14 @@ namespace NetArchTest.Rules.UnitTests
         [Fact(DisplayName = "Types can be selected if their name does not have a specific end using a StringComparison.")]
         public void NotHaveNameEnding_UsingStringComparison_MatchesFound_ClassesSelected()
         {
-	        var result = Types
-		        .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
-		        .That()
-		        .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace3")
-		        .Should()
-		        .NotHaveNameEndingWith("ENTITY", StringComparison.Ordinal).GetResult();
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace3")
+                .Should()
+                .NotHaveNameEndingWith("ENTITY", StringComparison.Ordinal).GetResult();
 
-	        Assert.True(result.IsSuccessful);
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact(DisplayName = "Types can be selected by a regular expression.")]
@@ -173,6 +173,164 @@ namespace NetArchTest.Rules.UnitTests
                 .ResideInNamespace("NetArchTest.TestStructure.NameMatching")
                 .Should()
                 .NotHaveNameMatching(@"X\w").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected by their full name.")]
+        public void HaveFullName_MatchFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace2.Namespace3")
+                .Should()
+                .HaveFullName("NetArchTest.TestStructure.NameMatching.Namespace2.Namespace3.ClassB2").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected if they do not have a specific full name.")]
+        public void NotHaveFullName_MatchFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace1")
+                .Should()
+                .NotHaveFullName("NetArchTest.TestStructure.NameMatching.Namespace1.ClassB2").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected by the start of their full name.")]
+        public void HaveFullNameStarting_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace1")
+                .Should()
+                .HaveFullNameStartingWith("NetArchTest.TestStructure.NameMatching.Namespace1.Class").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected by the start of their full name using a StringComparison.")]
+        public void HaveFullNameStarting_UsingStringComparison_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace3.A")
+                .Should()
+                .HaveFullNameStartingWith("NetArchTest.TestStructure.NameMatching.Namespace3.A", StringComparison.Ordinal).GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected if their full name does not have a specific start.")]
+        public void NotHaveFullNameStarting_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching")
+                .Should()
+                .NotHaveFullNameStartingWith("NetArchTest.TestStructure.NameMatching.X").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected if their full name does not have a specific start using a StringComparison.")]
+        public void NotHaveFullNameStarting_UsingStringComparison_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching")
+                .Should()
+                .NotHaveFullNameStartingWith("NetArchTest.TestStructure.NameMatching.s", StringComparison.Ordinal).GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected by the end of their full name.")]
+        public void HaveFullNameEnding_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace2.Namespace3")
+                .Should()
+                .HaveFullNameEndingWith("B2").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected by the end of their full name using a StringComparison.")]
+        public void HaveFullNameEnding_UsingStringComparison_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace2.Namespace3.B")
+                .Should()
+                .HaveFullNameEndingWith("ntity").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected if their full name does not have a specific end.")]
+        public void NotHaveFullNameEnding_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace2.Namespace1")
+                .Should()
+                .NotHaveFullNameEndingWith("B2").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected if their full name does not have a specific end using a StringComparison.")]
+        public void NotHaveFullNameEnding_UsingStringComparison_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace3")
+                .Should()
+                .NotHaveFullNameEndingWith("ENTITY", StringComparison.Ordinal).GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected by a regular expression against their full name.")]
+        public void HaveFullNameMatching_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching")
+                .And()
+                .DoNotResideInNamespace("NetArchTest.TestStructure.NameMatching.Namespace3")
+                .Should()
+                .HaveFullNameMatching(@"NetArchTest\.TestStructure\.NameMatching\.(Namespace\d\.){1,}Class\w\d").GetResult();
+
+            Assert.True(result.IsSuccessful);
+        }
+
+        [Fact(DisplayName = "Types can be selected if their full names do not conform to a regular expression.")]
+        public void NotHaveFullNameMatching_MatchesFound_ClassesSelected()
+        {
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.NameMatching")
+                .Should()
+                .NotHaveFullNameMatching(@"NetArchTest\.TestStructure\.NameMatching\.X\w").GetResult();
 
             Assert.True(result.IsSuccessful);
         }
@@ -421,31 +579,31 @@ namespace NetArchTest.Rules.UnitTests
         [Fact(DisplayName = "Types can be selected if they are static.")]
         public void AreStatic_MatchesFound_ClassesSelected()
         {
-	        var result = Types
-		        .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
-		        .That()
-		        .ResideInNamespace("NetArchTest.TestStructure.Classes")
-		        .And()
-		        .HaveNameEndingWith("StaticClass")
-		        .Should()
-		        .BeStatic().GetResult();
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.Classes")
+                .And()
+                .HaveNameEndingWith("StaticClass")
+                .Should()
+                .BeStatic().GetResult();
 
-	        Assert.True(result.IsSuccessful);
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact(DisplayName = "Types can be selected if they are not static.")]
         public void AreNotStatic_MatchesFound_ClassesSelected()
         {
-	        var result = Types
-		        .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
-		        .That()
-		        .ResideInNamespace("NetArchTest.TestStructure.Classes")
-		        .And()
-		        .HaveName(nameof(ExampleClass))
-		        .Should()
-		        .NotBeStatic().GetResult();
+            var result = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .ResideInNamespace("NetArchTest.TestStructure.Classes")
+                .And()
+                .HaveName(nameof(ExampleClass))
+                .Should()
+                .NotBeStatic().GetResult();
 
-	        Assert.True(result.IsSuccessful);
+            Assert.True(result.IsSuccessful);
         }
 
         [Fact(DisplayName = "Types can be selected if they are nested.")]
@@ -960,18 +1118,21 @@ namespace NetArchTest.Rules.UnitTests
             Assert.NotNull(result.DepepdencyInfoTypeNames);
 
             Assert.Collection(result.DepepdencyInfoTypeNames,
-                item => {
+                item =>
+                {
                     Assert.Equal(typeof(HasAnotherDependency).FullName, item.Key);
                     Assert.Collection(item.Value,
                         x => Assert.Equal(typeof(AnotherExampleDependency).FullName, x));
                 },
-                item => {
+                item =>
+                {
                     Assert.Equal(typeof(HasDependencies).FullName, item.Key);
                     Assert.Collection(item.Value.OrderBy(x => x),
                         x => Assert.Equal(typeof(AnotherExampleDependency).FullName, x),
                         x => Assert.Equal(typeof(ExampleDependency).FullName, x));
                 },
-                item => {
+                item =>
+                {
                     Assert.Equal(typeof(HasDependency).FullName, item.Key);
                     Assert.Collection(item.Value,
                         x => Assert.Equal(typeof(ExampleDependency).FullName, x));
