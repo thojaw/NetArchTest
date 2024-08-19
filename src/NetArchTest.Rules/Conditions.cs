@@ -106,8 +106,8 @@
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
         public ConditionList HaveNameStartingWith(string start, StringComparison comparer)
         {
-	        _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveNameStartingWith(comparer), start, true);
-	        return new ConditionList(_types, _should, _sequence);
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveNameStartingWith(comparer), start, true);
+            return new ConditionList(_types, _should, _sequence);
         }
 
         /// <summary>
@@ -129,8 +129,8 @@
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
         public ConditionList NotHaveNameStartingWith(string start, StringComparison comparer)
         {
-	        _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveNameStartingWith(comparer), start, false);
-	        return new ConditionList(_types, _should, _sequence);
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveNameStartingWith(comparer), start, false);
+            return new ConditionList(_types, _should, _sequence);
         }
 
         /// <summary>
@@ -152,8 +152,8 @@
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
         public ConditionList HaveNameEndingWith(string end, StringComparison comparer)
         {
-	        _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveNameEndingWith(comparer), end, true);
-	        return new ConditionList(_types, _should, _sequence);
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveNameEndingWith(comparer), end, true);
+            return new ConditionList(_types, _should, _sequence);
         }
 
         /// <summary>
@@ -175,8 +175,144 @@
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
         public ConditionList NotHaveNameEndingWith(string end, StringComparison comparer)
         {
-	        _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveNameEndingWith(comparer), end, false);
-	        return new ConditionList(_types, _should, _sequence);
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveNameEndingWith(comparer), end, false);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types that have a specific full name.
+        /// </summary>
+        /// <param name="fullName">The full name of the class to match against.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveFullName(string fullName)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullName, fullName, true);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types that do not have a particular full name.
+        /// </summary>
+        /// <param name="fullName">The full name of the class to match against.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveFullName(string fullName)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullName, fullName, false);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types according to a regular expression matching their full name.
+        /// </summary>
+        /// <param name="pattern">The regular expression pattern to match against.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveFullNameMatching(string pattern)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameMatching, pattern, true);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types according to a regular expression that does not match their full name.
+        /// </summary>
+        /// <param name="pattern">The regular expression pattern to match against.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveFullNameMatching(string pattern)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameMatching, pattern, false);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveFullNameStartingWith(string start)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameStartingWith, start, true);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <param name="comparer">The string comparer.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveFullNameStartingWith(string start, StringComparison comparer)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveFullNameStartingWith(comparer), start, true);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveFullNameStartingWith(string start)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameStartingWith, start, false);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not start with the specified text.
+        /// </summary>
+        /// <param name="start">The text to match against.</param>
+        /// <param name="comparer">The string comparer.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveFullNameStartingWith(string start, StringComparison comparer)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveFullNameStartingWith(comparer), start, false);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not end with the specified text.
+        /// </summary>
+        /// <param name="end">The text to match against.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveFullNameEndingWith(string end)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameEndingWith, end, true);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not end with the specified text.
+        /// </summary>
+        /// <param name="end">The text to match against.</param>
+        /// <param name="comparer">The string comparer.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList HaveFullNameEndingWith(string end, StringComparison comparer)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveFullNameEndingWith(comparer), end, true);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not end with the specified text.
+        /// </summary>
+        /// <param name="end">The text to match against.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveFullNameEndingWith(string end)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.HaveFullNameEndingWith, end, false);
+            return new ConditionList(_types, _should, _sequence);
+        }
+
+        /// <summary>
+        /// Selects types whose full names do not end with the specified text.
+        /// </summary>
+        /// <param name="end">The text to match against.</param>
+        /// <param name="comparer">The string comparer.</param>
+        /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
+        public ConditionList NotHaveFullNameEndingWith(string end, StringComparison comparer)
+        {
+            _sequence.AddFunctionCall(FunctionDelegates.MakeFunctionDelegateUsingStringComparerForHaveFullNameEndingWith(comparer), end, false);
+            return new ConditionList(_types, _should, _sequence);
         }
 
         /// <summary>
@@ -353,8 +489,8 @@
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
         public ConditionList BeStatic()
         {
-	        _sequence.AddFunctionCall(FunctionDelegates.BeStatic, true, true);
-	        return new ConditionList(_types, _should, _sequence);
+            _sequence.AddFunctionCall(FunctionDelegates.BeStatic, true, true);
+            return new ConditionList(_types, _should, _sequence);
         }
 
         /// <summary>
@@ -363,8 +499,8 @@
         /// <returns>An updated set of conditions that can be applied to a list of types.</returns>
         public ConditionList NotBeStatic()
         {
-	        _sequence.AddFunctionCall(FunctionDelegates.BeStatic, true, false);
-	        return new ConditionList(_types, _should, _sequence);
+            _sequence.AddFunctionCall(FunctionDelegates.BeStatic, true, false);
+            return new ConditionList(_types, _should, _sequence);
         }
 
         /// <summary>
@@ -682,7 +818,7 @@
             _sequence.AddFunctionCall(FunctionDelegates.HaveDependencyOnAny, new List<string> { dependency }, false);
             return new ConditionList(_types, _should, _sequence);
         }
-        
+
         /// <summary>
         /// Selects types that do not have a dependency on any of the particular types.
         /// </summary>

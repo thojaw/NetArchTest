@@ -41,7 +41,28 @@ namespace NetArchTest.Rules
             {
                 var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
                 
-                return new TypeDefinitionResult(input.Where(c => r.Match(c.Name).Success == condition));
+                return new TypeDefinitionResult(input.Where(c => r.IsMatch(c.Name) == condition));
+            };
+
+        /// <summary>
+        /// Function for finding a specific full type name.
+        /// </summary>
+        internal static readonly FunctionDelegate<string> HaveFullName = 
+            delegate (IEnumerable<TypeDefinition> input, string name, bool condition)
+            {
+                return new TypeDefinitionResult(input.Where(c => 
+                    c.FullName.Equals(name, StringComparison.InvariantCultureIgnoreCase) == condition));
+            };
+
+        /// <summary>
+        /// Function for matching a full type name using a regular expression.
+        /// </summary>
+        internal static readonly FunctionDelegate<string> HaveFullNameMatching = 
+            delegate (IEnumerable<TypeDefinition> input, string pattern, bool condition)
+            {
+                var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
+                
+                return new TypeDefinitionResult(input.Where(c => r.IsMatch(c.FullName) == condition));
             };
 
         /// <summary>
@@ -66,6 +87,30 @@ namespace NetArchTest.Rules
             => delegate (IEnumerable<TypeDefinition> input, string end, bool condition)
             {
                 return new TypeDefinitionResult(input.Where(c => c.Name.EndsWith(end, comparer) == condition));
+            };
+
+        /// <summary>
+        /// Function for matching the start of a full type name.
+        /// </summary>
+        internal static readonly FunctionDelegate<string> HaveFullNameStartingWith = 
+            MakeFunctionDelegateUsingStringComparerForHaveFullNameStartingWith(StringComparison.InvariantCultureIgnoreCase);
+
+        internal static FunctionDelegate<string> MakeFunctionDelegateUsingStringComparerForHaveFullNameStartingWith(StringComparison comparer) 
+            => delegate (IEnumerable<TypeDefinition> input, string start, bool condition) 
+            {
+                return new TypeDefinitionResult(input.Where(c => c.FullName.StartsWith(start, comparer) == condition));
+            };
+
+        /// <summary>
+        /// Function for matching the end of a full type name.
+        /// </summary>
+        internal static readonly FunctionDelegate<string> HaveFullNameEndingWith = 
+            MakeFunctionDelegateUsingStringComparerForHaveFullNameEndingWith(StringComparison.InvariantCultureIgnoreCase);
+
+        internal static FunctionDelegate<string> MakeFunctionDelegateUsingStringComparerForHaveFullNameEndingWith(StringComparison comparer) 
+            => delegate (IEnumerable<TypeDefinition> input, string end, bool condition)
+            {
+                return new TypeDefinitionResult(input.Where(c => c.FullName.EndsWith(end, comparer) == condition));
             };
 
         /// <summary>
@@ -260,7 +305,7 @@ namespace NetArchTest.Rules
             {
                 var r = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
             
-                return new TypeDefinitionResult(input.Where(c => r.Match(c.GetNamespace()).Success == condition));
+                return new TypeDefinitionResult(input.Where(c => r.IsMatch(c.GetNamespace()) == condition));
             };
 
         /// <summary>

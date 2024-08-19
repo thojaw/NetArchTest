@@ -30,7 +30,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="PredicateList"/> class.
         /// </summary>
-        internal PredicateList(Types types, FunctionSequence sequence) 
+        internal PredicateList(Types types, FunctionSequence sequence)
         {
             _types = types;
             _typeDefinitions = types.GetTypeDefinitions();
@@ -62,9 +62,20 @@
         /// Returns the types returned by these predicates.
         /// </summary>
         /// <returns>A list of types.</returns>
-        public IEnumerable<Type> GetTypes()
-            => _sequence.Execute(_typeDefinitions)
-                .Select(t => t.ToType());
+        public IEnumerable<Type> GetTypes(bool disposeReferences = true)
+        {
+            try
+            {
+                return _sequence.Execute(_typeDefinitions).Select(t => t.ToType()).ToList();
+            }
+            finally
+            {
+                if (disposeReferences)
+                {
+                    _types.Dispose();
+                }
+            }
+        }
 
         /// <summary>
         /// Returns the list of type names returned by these predicates.
@@ -72,8 +83,20 @@
         /// <remarks>
         /// This is a "safer" way of getting a list of types returned by these predicates as it does not load the types when enumerating the list. This can lead to dependency loading errors.
         /// </remarks>
-        public IEnumerable<string> GetTypeNames()
-            => _sequence.Execute(_typeDefinitions).Select(t => t.FullName);
+        public IEnumerable<string> GetTypeNames(bool disposeReferences = true)
+        {
+            try
+            {
+                return _sequence.Execute(_typeDefinitions).Select(t => t.FullName).ToList();
+            }
+            finally
+            {
+                if (disposeReferences)
+                {
+                    _types.Dispose();
+                }
+            }
+        }
 
         /// <summary>
         /// Specifies that any subsequent predicates should be treated as "and" conditions.
