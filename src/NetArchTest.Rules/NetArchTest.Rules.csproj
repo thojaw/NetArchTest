@@ -7,7 +7,7 @@
     <AssemblyVersion>1.4.0.0</AssemblyVersion>
     <Authors>Ben Morris; Thomas Haid</Authors>
     <Product>TestArchNet</Product>
-    <Description>A fluent API for .Net Standard that can enforce architectural rules in unit tests.</Description>
+    <Description>A fluent API for .Net 8 that can enforce architectural rules in unit tests or anywhere.</Description>
     <Copyright>Copyright (c) 2021 Ben Morris; (c) 2024 Thomas Haid</Copyright>
     <PackageLicense>https://github.com/thojaw/TestArchNet/blob/master/LICENSE</PackageLicense>
     <PackageIcon>package.png</PackageIcon>
