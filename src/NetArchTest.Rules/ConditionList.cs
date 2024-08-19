@@ -88,15 +88,39 @@
         /// Returns the number of types that satisfy the conditions.
         /// </summary>
         /// <returns>A list of types.</returns>
-        public int Count()
-            => _sequence.Execute(_typeDefinitions).Count();
+        public int Count(bool disposeReferences = true)
+        {
+            try
+            {
+                return _sequence.Execute(_typeDefinitions).Count();
+            }
+            finally
+            {
+                if (disposeReferences)
+                {
+                    _types.Dispose();
+                }
+            }
+        }
 
         /// <summary>
         /// Returns the list of types that satisfy the conditions.
         /// </summary>
         /// <returns>A list of types.</returns>
-        public IEnumerable<Type> GetTypes()
-            => _sequence.Execute(_typeDefinitions).Select(t => t.ToType());
+        public IEnumerable<Type> GetTypes(bool disposeReferences = true)
+        {
+            try
+            {
+                return _sequence.Execute(_typeDefinitions).Select(t => t.ToType()).ToList();
+            }
+            finally
+            {
+                if (disposeReferences)
+                {
+                    _types.Dispose();
+                }
+            }
+        }
 
         /// <summary>
         /// Returns the list of type names that satisfy the conditions.
@@ -104,8 +128,20 @@
         /// <remarks>
         /// This is a "safer" way of getting a list of types that satisfy the conditions as it does not load the types when enumerating the list. This can lead to dependency loading errors.
         /// </remarks>
-        public IEnumerable<string> GetTypeNames()
-            => _sequence.Execute(_typeDefinitions).Select(t => t.FullName);
+        public IEnumerable<string> GetTypeNames(bool disposeReferences = true)
+        {
+            try
+            {
+                return _sequence.Execute(_typeDefinitions).Select(t => t.FullName).ToList();
+            }
+            finally
+            {
+                if (disposeReferences)
+                {
+                    _types.Dispose();
+                }
+            }
+        }
 
         /// <summary>
         /// Specifies that any subsequent condition should be treated as an "and" condition.

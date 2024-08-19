@@ -1211,5 +1211,40 @@ namespace NetArchTest.Rules.UnitTests
             // The custom rule was executed at least once
             Assert.True(rule.TestMethodCalled);
         }
+
+        [Fact(DisplayName = "Get types doesn't run twice when disposed.")]
+        public void GetTypes_DoesNot_RunTwiceWhenDisposed()
+        {
+            var customRule = new CustomRuleExample(_ => false);
+
+            var condition = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .HaveName("ClassA1")
+                .Should()
+                .MeetCustomRule(customRule);
+
+            var t = condition.GetTypes();
+            
+            Assert.ThrowsAny<ObjectDisposedException>(() => condition.GetTypes());
+        }
+
+        [Fact(DisplayName = "Get types does run twice when not disposed.")]
+        public void GetTypes_Does_RunTwiceWhenNotDisposed()
+        {
+            var customRule = new CustomRuleExample(_ => false);
+
+            var condition = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .HaveName("ClassA1")
+                .Should()
+                .MeetCustomRule(customRule);
+
+            var t1 = condition.GetTypes(false);
+            var t2 = condition.GetTypes(false);
+
+            Assert.Equal(t1, t2);
+        }
     }
 }

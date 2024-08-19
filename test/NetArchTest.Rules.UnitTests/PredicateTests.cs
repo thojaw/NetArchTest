@@ -29,6 +29,7 @@ namespace NetArchTest.Rules.UnitTests
     using Xunit;
     using NetArchTest.TestStructure.Nullable;
     using NetArchTest.TestStructure.Dependencies.Examples;
+    using NetArchTest.TestStructure.Dependencies.Search.DependencyType;
 
     public class PredicateTests
     {
@@ -1095,6 +1096,33 @@ namespace NetArchTest.Rules.UnitTests
                 .GetResult();
             
             Assert.True(customRule.TimesTimesCalled == 1);
+        }
+
+        [Fact(DisplayName = "Get type names doesn't run twice when disposed.")]
+        public void GetTypeNames_DoesNot_RunTwiceWhenDisposed()
+        {
+            var predicate = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .HaveName("ClassA1");
+
+            var t = predicate.GetTypeNames();
+            
+            Assert.ThrowsAny<ObjectDisposedException>(() => predicate.GetTypeNames());
+        }
+
+        [Fact(DisplayName = "Get type names does run twice when not disposed.")]
+        public void GetTypeNames_Does_RunTwiceWhenNotDisposed()
+        {
+            var predicate = Types
+                .InAssembly(Assembly.GetAssembly(typeof(ClassA1)))
+                .That()
+                .HaveName("ClassA1");
+
+            var t1 = predicate.GetTypeNames(false);
+            var t2 = predicate.GetTypeNames(false);
+
+            Assert.Equal(t1, t2);
         }
     }
 }
