@@ -1114,10 +1114,10 @@ namespace NetArchTest.Rules.UnitTests
                 .GetResult();
 
             Assert.False(result.IsSuccessful);
-            Assert.NotNull(result.DepepdencyInfoTypes);
-            Assert.NotNull(result.DepepdencyInfoTypeNames);
+            Assert.NotNull(result.DependencyInfoTypes);
+            Assert.NotNull(result.DependencyInfoTypeNames);
 
-            Assert.Collection(result.DepepdencyInfoTypeNames,
+            Assert.Collection(result.DependencyInfoTypeNames,
                 item =>
                 {
                     Assert.Equal(typeof(HasAnotherDependency).FullName, item.Key);
