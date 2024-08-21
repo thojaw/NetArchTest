@@ -50,7 +50,7 @@
         /// <remarks>
         /// This method loads all the types and may throw dependency loading errors if the test project does not have a direct dependency on the type being loaded.
         /// </remarks>
-        public IReadOnlyDictionary<Type, IEnumerable<string>> DepepdencyInfoTypes
+        public IReadOnlyDictionary<Type, IEnumerable<string>> DependencyInfoTypes
             => _dependencyInfo?.ToDictionary(x => x.Key.ToType(), x => x.Value);
 
         /// <summary>
@@ -59,7 +59,7 @@
         /// <remarks>
         /// This is a "safer" way of getting a list of failed types as it does not load the types when enumerating the list. This can lead to dependency loading errors.
         /// </remarks>
-        public IReadOnlyDictionary<string, IEnumerable<string>> DepepdencyInfoTypeNames
+        public IReadOnlyDictionary<string, IEnumerable<string>> DependencyInfoTypeNames
             => _dependencyInfo?.ToDictionary(x => x.Key.FullName, x => x.Value);
 
         /// <summary>
